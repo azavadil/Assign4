@@ -14,7 +14,10 @@
 		99464B9B17622C4E00D23765 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464B9A17622C4E00D23765 /* main.m */; };
 		99464B9F17622C4E00D23765 /* PicHunterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464B9E17622C4E00D23765 /* PicHunterAppDelegate.m */; };
 		99464BA217622C4E00D23765 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99464BA017622C4E00D23765 /* MainStoryboard.storyboard */; };
-		99464BA517622C4E00D23765 /* PicHunterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BA417622C4E00D23765 /* PicHunterViewController.m */; };
+		99464BAD17622D0700D23765 /* PicHunterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BAC17622D0700D23765 /* PicHunterTVC.m */; };
+		99464BB117622E8E00D23765 /* FlickrFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB017622E8E00D23765 /* FlickrFetcher.m */; };
+		99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB31762313D00D23765 /* PicHunterTop20TVC.m */; };
+		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,15 +25,22 @@
 		99464B8E17622C4E00D23765 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		99464B9017622C4E00D23765 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		99464B9217622C4E00D23765 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		99464B9617622C4E00D23765 /* Assign4-Info.plist */ = {isa = PBXFileReference; path = "Assign4-Info.plist"; sourceTree = "<group>"; };
+		99464B9617622C4E00D23765 /* Assign4-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Assign4-Info.plist"; sourceTree = "<group>"; };
 		99464B9817622C4E00D23765 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		99464B9A17622C4E00D23765 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		99464B9C17622C4E00D23765 /* Assign4-Prefix.pch */ = {isa = PBXFileReference; path = "Assign4-Prefix.pch"; sourceTree = "<group>"; };
-		99464B9D17622C4E00D23765 /* PicHunterAppDelegate.h */ = {isa = PBXFileReference; path = PicHunterAppDelegate.h; sourceTree = "<group>"; };
+		99464B9C17622C4E00D23765 /* Assign4-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Assign4-Prefix.pch"; sourceTree = "<group>"; };
+		99464B9D17622C4E00D23765 /* PicHunterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PicHunterAppDelegate.h; sourceTree = "<group>"; };
 		99464B9E17622C4E00D23765 /* PicHunterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PicHunterAppDelegate.m; sourceTree = "<group>"; };
 		99464BA117622C4E00D23765 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		99464BA317622C4E00D23765 /* PicHunterViewController.h */ = {isa = PBXFileReference; path = PicHunterViewController.h; sourceTree = "<group>"; };
-		99464BA417622C4E00D23765 /* PicHunterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PicHunterViewController.m; sourceTree = "<group>"; };
+		99464BAB17622D0700D23765 /* PicHunterTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicHunterTVC.h; sourceTree = "<group>"; };
+		99464BAC17622D0700D23765 /* PicHunterTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHunterTVC.m; sourceTree = "<group>"; };
+		99464BAE17622E8E00D23765 /* FlickrAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrAPIKey.h; sourceTree = "<group>"; };
+		99464BAF17622E8E00D23765 /* FlickrFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrFetcher.h; sourceTree = "<group>"; };
+		99464BB017622E8E00D23765 /* FlickrFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrFetcher.m; sourceTree = "<group>"; };
+		99464BB21762313D00D23765 /* PicHunterTop20TVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicHunterTop20TVC.h; sourceTree = "<group>"; };
+		99464BB31762313D00D23765 /* PicHunterTop20TVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHunterTop20TVC.m; sourceTree = "<group>"; };
+		99464BB51762529500D23765 /* PlacePhotosTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePhotosTVC.h; sourceTree = "<group>"; };
+		99464BB61762529500D23765 /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +87,16 @@
 		99464B9417622C4E00D23765 /* Assign4 */ = {
 			isa = PBXGroup;
 			children = (
-				99464B9D17622C4E00D23765 /* PicHunterAppDelegate.h */,
-				99464B9E17622C4E00D23765 /* PicHunterAppDelegate.m */,
+				99464BB51762529500D23765 /* PlacePhotosTVC.h */,
+				99464BB61762529500D23765 /* PlacePhotosTVC.m */,
+				99464BAE17622E8E00D23765 /* FlickrAPIKey.h */,
+				99464BAF17622E8E00D23765 /* FlickrFetcher.h */,
+				99464BB017622E8E00D23765 /* FlickrFetcher.m */,
+				99464BAB17622D0700D23765 /* PicHunterTVC.h */,
+				99464BAC17622D0700D23765 /* PicHunterTVC.m */,
+				99464BB21762313D00D23765 /* PicHunterTop20TVC.h */,
+				99464BB31762313D00D23765 /* PicHunterTop20TVC.m */,
 				99464BA017622C4E00D23765 /* MainStoryboard.storyboard */,
-				99464BA317622C4E00D23765 /* PicHunterViewController.h */,
-				99464BA417622C4E00D23765 /* PicHunterViewController.m */,
 				99464B9517622C4E00D23765 /* Supporting Files */,
 			);
 			path = Assign4;
@@ -90,6 +105,8 @@
 		99464B9517622C4E00D23765 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				99464B9D17622C4E00D23765 /* PicHunterAppDelegate.h */,
+				99464B9E17622C4E00D23765 /* PicHunterAppDelegate.m */,
 				99464B9617622C4E00D23765 /* Assign4-Info.plist */,
 				99464B9717622C4E00D23765 /* InfoPlist.strings */,
 				99464B9A17622C4E00D23765 /* main.m */,
@@ -162,7 +179,10 @@
 			files = (
 				99464B9B17622C4E00D23765 /* main.m in Sources */,
 				99464B9F17622C4E00D23765 /* PicHunterAppDelegate.m in Sources */,
-				99464BA517622C4E00D23765 /* PicHunterViewController.m in Sources */,
+				99464BAD17622D0700D23765 /* PicHunterTVC.m in Sources */,
+				99464BB117622E8E00D23765 /* FlickrFetcher.m in Sources */,
+				99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */,
+				99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
