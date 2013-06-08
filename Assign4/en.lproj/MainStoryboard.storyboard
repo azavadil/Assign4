@@ -14,11 +14,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="314-ge-etJ" detailTextLabel="fmn-4Q-UHM" style="IBUITableViewCellStyleSubtitle" id="0Zr-56-7TS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Top Place Cell" textLabel="314-ge-etJ" detailTextLabel="fmn-4Q-UHM" style="IBUITableViewCellStyleSubtitle" id="0Zr-56-7TS">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="314-ge-etJ">
@@ -38,6 +38,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="RIH-oh-Qm6" kind="push" identifier="Show List of Photos" id="EHz-9v-AG3"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -54,23 +57,39 @@
                     </navigationItem>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-357" y="140"/>
+            <point key="canvasLocation" x="-1157" y="-56"/>
         </scene>
         <scene sceneID="fgY-4w-d95">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7tr-9o-adH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="RIH-oh-Qm6" sceneMemberID="viewController">
+                <tableViewController id="RIH-oh-Qm6" customClass="PlacePhotosTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cX9-wa-pq4">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Esd-4e-h3m">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Photo taken at location" textLabel="1Xq-JY-c5H" detailTextLabel="lOu-j5-OzP" style="IBUITableViewCellStyleSubtitle" id="Esd-4e-h3m">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Xq-JY-c5H">
+                                            <rect key="frame" x="10" y="2" width="38" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lOu-j5-OzP">
+                                            <rect key="frame" x="10" y="24" width="47" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196081399917603" green="0.50196081399917603" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -80,9 +99,16 @@
                             <outlet property="delegate" destination="RIH-oh-Qm6" id="DD3-nh-jhM"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="qj8-AP-Y66">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="eCl-vb-2q6">
+                            <connections>
+                                <action selector="refresh:" destination="RIH-oh-Qm6" id="Dz1-cF-esB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="89" y="138"/>
+            <point key="canvasLocation" x="-742" y="-56"/>
         </scene>
         <scene sceneID="Sxo-4v-c72">
             <objects>
@@ -111,7 +137,7 @@
                     <navigationItem key="navigationItem" title="Last 20" id="lfd-Ex-xLV"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-365" y="720"/>
+            <point key="canvasLocation" x="-1165" y="524"/>
         </scene>
         <scene sceneID="PDm-a3-GwP">
             <objects>
@@ -128,7 +154,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-803" y="140"/>
+            <point key="canvasLocation" x="-1603" y="-56"/>
         </scene>
         <scene sceneID="wfG-jN-oou">
             <objects>
@@ -145,9 +171,20 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-803" y="720"/>
+            <point key="canvasLocation" x="-1603" y="524"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="PicHunterTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTVC.h"/>
+        </class>
+        <class className="PicHunterTop20TVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTop20TVC.h"/>
+        </class>
+        <class className="PlacePhotosTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacePhotosTVC.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

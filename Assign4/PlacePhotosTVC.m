@@ -7,66 +7,27 @@
 //
 
 #import "PlacePhotosTVC.h"
+#import "FlickrFetcher.h"
 
 
 @implementation PlacePhotosTVC
 
-- (id)initWithStyle:(UITableViewStyle)style
+@synthesize listOfPhotos = _listOfPhotos; 
+
+- (void) setListOfPhotos:(NSArray *)listOfPhotos
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if (listOfPhotos != _listOfPhotos) 
+    {
+        _listOfPhotos = listOfPhotos; 
+        if (self.tableView.window) [self.tableView reloadData]; 
     }
-    return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+
+- (IBAction)refresh:(id)sender {
+    NSLog(@"list = %@", self.listOfPhotos);
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -76,31 +37,31 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
+
+// Note: leaving the numberOfSections method in the file was stoping the table from rendering
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return [self.listOfPhotos count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Photo taken at location";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
     
+    NSDictionary *photoDict = [self.listOfPhotos objectAtIndex:indexPath.row]; 
+    cell.textLabel.text =  [photoDict objectForKey:FLICKR_PHOTO_TITLE]; 
+    cell.detailTextLabel.text = [photoDict objectForKey:FLICKR_PHOTO_DESCRIPTION]; 
     return cell;
 }
 

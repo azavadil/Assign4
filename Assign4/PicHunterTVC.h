@@ -10,6 +10,10 @@
 
 @interface PicHunterTVC : UITableViewController
 
-@property (nonatomic, strong) NSArray *topPlaces; // dictionaries of photos
+
+/* Array of dictionaries 
+ * Dictionaries contain information on a place
+ */ 
+@property (nonatomic, strong) NSArray *topPlaces; 
 
 @end

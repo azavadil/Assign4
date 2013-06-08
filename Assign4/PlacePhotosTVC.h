@@ -10,4 +10,8 @@
 
 @interface PlacePhotosTVC : UITableViewController
 
+
+//simple model, array of photo dictionaries 
+@property (nonatomic, strong) NSArray *listOfPhotos; 
+
 @end

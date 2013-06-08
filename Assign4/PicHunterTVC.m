@@ -7,12 +7,16 @@
 //
 
 #import "PicHunterTVC.h"
-#import "FlickrFetcher.h" 
+#import "FlickrFetcher.h"
+#import "PlacePhotosTVC.h" 
+
 
 @implementation PicHunterTVC
 
 
 @synthesize topPlaces = _topPlaces; 
+
+
 
 - (IBAction)refresh:(id)sender {
     NSArray *topPlaces = [FlickrFetcher topPlaces]; 
@@ -29,6 +33,18 @@
 }
 
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Show List of Photos"])
+        
+    {
+        
+        NSDictionary *placeDict = [self.topPlaces objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+        NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50]; 
+        NSLog(@"number of photos = %d", [photoDictionaries count]); 
+        [segue.destinationViewController setListOfPhotos:photoDictionaries];
+    }
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -48,7 +64,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Top Place Photo";
+    static NSString *CellIdentifier = @"Top Place Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {

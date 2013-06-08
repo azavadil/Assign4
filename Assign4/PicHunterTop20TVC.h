@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PicHunterTVC.h"
 
-@interface PicHunterTop20TVC : PicHunterTVC
+@interface PicHunterTop20TVC : UITableViewController
 
 @end
