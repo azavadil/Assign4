@@ -41,7 +41,6 @@
         
         NSDictionary *placeDict = [self.topPlaces objectAtIndex:self.tableView.indexPathForSelectedRow.row];
         NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50]; 
-        NSLog(@"number of photos = %d", [photoDictionaries count]); 
         [segue.destinationViewController setListOfPhotos:photoDictionaries];
     }
 }

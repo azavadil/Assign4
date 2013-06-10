@@ -8,6 +8,7 @@
 
 #import "PlacePhotosTVC.h"
 #import "FlickrFetcher.h"
+#import "TopPlacePhotoVC.h" 
 
 
 @implementation PlacePhotosTVC
@@ -50,7 +51,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Photo taken at location";
+    static NSString *CellIdentifier = @"Photo taken at topPlace";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -60,10 +61,40 @@
     // Configure the cell...
     
     NSDictionary *photoDict = [self.listOfPhotos objectAtIndex:indexPath.row]; 
-    cell.textLabel.text =  [photoDict objectForKey:FLICKR_PHOTO_TITLE]; 
-    cell.detailTextLabel.text = [photoDict objectForKey:FLICKR_PHOTO_DESCRIPTION]; 
+    NSString *photoTitle = [photoDict objectForKey:FLICKR_PHOTO_TITLE];
+    NSString *photoDescription = [photoDict objectForKey:FLICKR_PHOTO_DESCRIPTION];
+    
+    if(photoTitle && ![photoTitle isEqualToString:@""]) 
+    {
+        cell.textLabel.text = photoTitle;    
+    } 
+    else 
+    {
+        if(photoDescription && ![photoDescription isEqualToString:@""]) 
+        {
+            cell.textLabel.text = photoDescription;
+        }
+        else
+        {
+            cell.textLabel.text = @"Unknown"; 
+        }
+    }
+    
+    cell.detailTextLabel.text = photoDescription; 
     return cell;
 }
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"Show topPlace Photo"])
+    {
+        
+        NSDictionary *photoDict = [self.listOfPhotos objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+        [segue.destinationViewController setPhotoDictionary:photoDict];
+    }
+}
+
 
 /*
 // Override to support conditional editing of the table view.

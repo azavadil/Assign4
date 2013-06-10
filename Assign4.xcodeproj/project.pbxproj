@@ -18,6 +18,7 @@
 		99464BB117622E8E00D23765 /* FlickrFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB017622E8E00D23765 /* FlickrFetcher.m */; };
 		99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB31762313D00D23765 /* PicHunterTop20TVC.m */; };
 		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
+		99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		99464BB31762313D00D23765 /* PicHunterTop20TVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHunterTop20TVC.m; sourceTree = "<group>"; };
 		99464BB51762529500D23765 /* PlacePhotosTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePhotosTVC.h; sourceTree = "<group>"; };
 		99464BB61762529500D23765 /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
+		99CE616D176617E00090D4EE /* TopPlacePhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacePhotoVC.h; sourceTree = "<group>"; };
+		99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacePhotoVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +90,6 @@
 		99464B9417622C4E00D23765 /* Assign4 */ = {
 			isa = PBXGroup;
 			children = (
-				99464BB51762529500D23765 /* PlacePhotosTVC.h */,
-				99464BB61762529500D23765 /* PlacePhotosTVC.m */,
 				99464BAE17622E8E00D23765 /* FlickrAPIKey.h */,
 				99464BAF17622E8E00D23765 /* FlickrFetcher.h */,
 				99464BB017622E8E00D23765 /* FlickrFetcher.m */,
@@ -96,6 +97,10 @@
 				99464BAC17622D0700D23765 /* PicHunterTVC.m */,
 				99464BB21762313D00D23765 /* PicHunterTop20TVC.h */,
 				99464BB31762313D00D23765 /* PicHunterTop20TVC.m */,
+				99464BB51762529500D23765 /* PlacePhotosTVC.h */,
+				99464BB61762529500D23765 /* PlacePhotosTVC.m */,
+				99CE616D176617E00090D4EE /* TopPlacePhotoVC.h */,
+				99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */,
 				99464BA017622C4E00D23765 /* MainStoryboard.storyboard */,
 				99464B9517622C4E00D23765 /* Supporting Files */,
 			);
@@ -183,6 +188,7 @@
 				99464BB117622E8E00D23765 /* FlickrFetcher.m in Sources */,
 				99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */,
 				99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */,
+				99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
