@@ -11,4 +11,6 @@
 
 @interface PicHunterTop20TVC : UITableViewController
 
+@property (nonatomic, strong) NSArray *photoDictionaries; 
+
 @end

@@ -22,8 +22,15 @@
 @synthesize scrollView = _scrollView;
 @synthesize imageView = _imageView;
 
-@synthesize  photoDictionary = _photoDictionary; 
 
+@synthesize  photoDictionary = _photoDictionary; 
+@synthesize fileManager = _fileManager; 
+
+- (NSFileManager*)fileManager
+{
+    if (!_fileManager) _fileManager = [[NSFileManager alloc] init]; 
+    return _fileManager; 
+}
 
 
 
@@ -68,26 +75,81 @@
 
 
 
+#define MAXIMUM_CACHE_SIZE 10485760
+
+
+- (void)cachePhoto:(NSDictionary *)photoData imageToCache:(UIImage *)image
+{
+    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
+                                                      inDomains:NSUserDomainMask];  
+    
+    NSURL *cacheURL = [urlsArray lastObject]; 
+    
+    NSMutableDictionary *currImages = [[NSMutableDictionary alloc] initWithContentsOfURL:cacheURL]; 
+    NSMutableArray *chronology;
+    
+    while([currImages fileSize] > MAXIMUM_CACHE_SIZE)
+    {
+        // store an array that keeps the order items are entered into the dictionary 
+        
+        chronology = [currImages objectForKey:@"chronology"]; 
+        NSString *currKey = [chronology objectAtIndex:0]; 
+        [chronology removeObjectAtIndex:0];
+        [currImages removeObjectForKey:currKey]; 
+    }
+    
+    [chronology addObject:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+    [currImages setObject:image forKey:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+    [currImages setObject:chronology forKey:@"chronology"]; 
+    
+    [currImages writeToURL:cacheURL atomically:YES]; 
+    
+}
+
+
+
+
+- (UIImage *)fetchImage:(NSDictionary *)photoData
+{
+    return nil; 
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 /* viewDidLoad is the first place we want to think about putting things
  * all we need to do is set my scrollViews' contentSize to be the size of the image
  */ 
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.imageView.image = [UIImage imageWithData:
-                            [NSData dataWithContentsOfURL:
-                             [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
+    [spinner startAnimating]; 
     
     
-    self.scrollView.delegate = self; 
-    self.scrollView.contentSize = self.imageView.image.size; 
-    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height); 
-    self.title = [self.photoDictionary objectForKey:FLICKR_PHOTO_TITLE];
+    spinner.center = self.view.center;  
+    [self.view addSubview:spinner]; 
     
+    dispatch_queue_t downloadQueue = dispatch_queue_create("topPlaceImage downloader", NULL); 
+    dispatch_async(downloadQueue, ^{ 
+    
+        UIImage *currImage = [UIImage imageWithData:
+                               [NSData dataWithContentsOfURL:
+                                [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{ 
+            [spinner removeFromSuperview]; 
+            self.imageView.image = currImage; 
+            self.scrollView.delegate = self; 
+            self.scrollView.contentSize = self.imageView.image.size; 
+            self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height); 
+            self.title = [self.photoDictionary objectForKey:FLICKR_PHOTO_TITLE];
+        }); 
+        
+    }); 
+    
+    dispatch_release(downloadQueue); 
     
 }
 
@@ -102,42 +164,17 @@
 }
 
 - (IBAction)zoom1:(id)sender {
+      
+    float imageWidth = self.imageView.image.size.width; 
+    float imageHeight = self.imageView.image.size.height; 
+    float viewWidth = self.view.bounds.size.width; 
+    float viewHeight = self.view.bounds.size.height;
     
-    CGFloat imageWidth = self.imageView.image.size.width; 
-    CGFloat imageHeight = self.imageView.image.size.height; 
-    CGFloat viewWidth = self.scrollView.bounds.size.width; 
-    CGFloat viewHeight = self.scrollView.bounds.size.height;
+    float widthRatio = viewWidth / imageWidth; 
+    float heightRatio = viewHeight / imageHeight; 
     
-    CGFloat zoomFactor = 0; 
-    
-    if(imageWidth/imageHeight == viewWidth/viewHeight)
-    {
-        zoomFactor = viewWidth / imageWidth; 
-    } 
-    else if(imageWidth/imageHeight > viewWidth/viewHeight)
-    {
-        zoomFactor = viewHeight / imageWidth; 
-    } 
-    else if(imageWidth/imageHeight < viewWidth/viewHeight) 
-    {
-        zoomFactor = viewWidth / imageWidth; 
-    }
-     
-    CGPoint midPoint; 
-    
-    midPoint.x = self.scrollView.contentSize.width/2.; 
-    midPoint.y = self.scrollView.contentSize.height/2.; 
-     
-    CGPoint visibleOrigin; 
-    visibleOrigin.x = midPoint.x - self.scrollView.bounds.size.width/2.0; 
-    visibleOrigin.y = midPoint.y - self.scrollView.bounds.size.height/2.0;
-     
-    
-    CGRect visibleRect  = CGRectMake(visibleOrigin.x, visibleOrigin.y, 
-                                      midPoint.x - self.imageView.image.size.width*zoomFactor, 
-                                      midPoint.y - self.imageView.image.size.width*zoomFactor); 
-    
-    [self.scrollView zoomToRect:visibleRect animated:YES]; 
+       
+    self.scrollView.zoomScale = MAX(widthRatio, heightRatio); 
 
 }
 

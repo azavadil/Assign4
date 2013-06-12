@@ -19,8 +19,22 @@
 
 
 - (IBAction)refresh:(id)sender {
-    NSArray *topPlaces = [FlickrFetcher topPlaces]; 
-    self.topPlaces = topPlaces; 
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
+    [spinner startAnimating]; 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
+
+    
+    dispatch_queue_t download_queue = dispatch_queue_create("topPlaces downloader", NULL); 
+    dispatch_async(download_queue, ^{
+        NSArray *topPlaces = [FlickrFetcher topPlaces]; 
+        dispatch_async(dispatch_get_main_queue(), ^{   
+            self.topPlaces = topPlaces;
+            self.navigationItem.rightBarButtonItem = sender; 
+        });
+    }); 
+    
+    dispatch_release(download_queue);
 }
 
 - (void) setTopPlaces:(NSArray *)topPlaces
@@ -39,9 +53,25 @@
         
     {
         
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
+        [spinner startAnimating]; 
+        
+        UIViewController *destinationVC = (UIViewController *)segue.destinationViewController; 
+        destinationVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
+        
+        
         NSDictionary *placeDict = [self.topPlaces objectAtIndex:self.tableView.indexPathForSelectedRow.row];
-        NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50]; 
-        [segue.destinationViewController setListOfPhotos:photoDictionaries];
+        
+        dispatch_queue_t download_queue = dispatch_queue_create("topPlacePhotos downloader", NULL); 
+        dispatch_async(download_queue, ^{
+            NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50];
+            dispatch_async(dispatch_get_main_queue(), ^{ 
+                destinationVC.navigationItem.rightBarButtonItem = nil; 
+                [segue.destinationViewController setListOfPhotos:photoDictionaries];
+            }); 
+        }); 
+        dispatch_release(download_queue); 
+        
     }
 }
 

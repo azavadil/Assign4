@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSDictionary *photoDictionary;  
 
-
+@property (nonatomic, strong) NSFileManager *fileManager; 
 
 
 @end

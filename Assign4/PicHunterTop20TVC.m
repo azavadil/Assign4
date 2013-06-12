@@ -7,9 +7,12 @@
 //
 
 #import "PicHunterTop20TVC.h"
-
+#import "FlickrFetcher.h"
+#import "MostRecentVC.h"
 
 @implementation PicHunterTop20TVC
+
+@synthesize photoDictionaries = _photoDictionaries; 
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,17 +31,15 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+#define MOST_RECENT @"20_MostRecentPhotos"
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.photoDictionaries = [[NSUserDefaults standardUserDefaults] objectForKey:MOST_RECENT]; 
 }
 
 - (void)viewDidUnload
@@ -76,72 +77,59 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.photoDictionaries count]; 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Recently Viewed Photo";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
+    NSDictionary *photoDict = [self.photoDictionaries objectAtIndex:indexPath.row]; 
+    NSString *photoTitle = [photoDict objectForKey:FLICKR_PHOTO_TITLE];
+    NSString *photoDescription = [photoDict objectForKey:FLICKR_PHOTO_DESCRIPTION];
     
+    if(photoTitle && ![photoTitle isEqualToString:@""]) 
+    {
+        cell.textLabel.text = photoTitle;    
+    } 
+    else 
+    {
+        if(photoDescription && ![photoDescription isEqualToString:@""]) 
+        {
+            cell.textLabel.text = photoDescription;
+        }
+        else
+        {
+            cell.textLabel.text = @"Unknown"; 
+        }
+    }
+    
+    cell.detailTextLabel.text = photoDescription; 
     return cell;
+    
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if([segue.identifier isEqualToString:@"Show Recent Photo"])
+    {
+        
+        NSDictionary *photoDict = [self.photoDictionaries objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+        [segue.destinationViewController setRecentPhotoDictionary:photoDict];
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
