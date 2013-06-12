@@ -9,7 +9,9 @@
 #import "MostRecentVC.h"
 #import "FlickrFetcher.h"
 
-@interface MostRecentVC() <UIScrollViewDelegate> 
+@interface MostRecentVC() <UIScrollViewDelegate>
+
+@property (nonatomic, strong) NSFileManager *fileManager; 
 @end
 
 
@@ -17,40 +19,53 @@
 
 @synthesize scrollView = _scrollView; 
 @synthesize imageView = _imageView; 
+@synthesize fileManager = _fileManager; 
+
 
 @synthesize recentPhotoDictionary = _recentPhotoDictionary; 
+
+-(NSFileManager *)fileManager
+{
+    if(!_fileManager) _fileManager = [[NSFileManager alloc] init]; 
+    return _fileManager; 
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView   
 {
     return self.imageView; 
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (UIImage *)fetchImage:(NSDictionary *)photoData
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
     
-    // Release any cached data, images, etc that aren't in use.
+    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
+                                                  inDomains:NSUserDomainMask];  
+    
+    NSURL *filePath = [[urlsArray lastObject] URLByAppendingPathComponent:@"photoCache"]; 
+    NSDictionary *cachedImages = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
+    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[photoData valueForKey:FLICKR_PHOTO_ID]]]; 
+    
+    
+    if(cachedPhotoImage)
+    {
+        NSLog(@"cachedPhoto %@", [photoData valueForKey:FLICKR_PHOTO_ID]); 
+        return cachedPhotoImage; 
+    }
+    else
+    {
+        UIImage *result = [UIImage imageWithData:
+                           [NSData dataWithContentsOfURL:
+                            [FlickrFetcher urlForPhoto:self.recentPhotoDictionary format:FlickrPhotoFormatOriginal]]];
+        
+        return result; 
+    }
+    
+    
 }
+
+
 
 #pragma mark - View lifecycle
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -78,6 +93,20 @@
             self.scrollView.contentSize = self.imageView.image.size; 
             self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height); 
             self.title = [self.recentPhotoDictionary objectForKey:FLICKR_PHOTO_TITLE];
+            
+            //set the zoomRatio
+            
+            float imageWidth = self.imageView.image.size.width; 
+            float imageHeight = self.imageView.image.size.height; 
+            float viewWidth = self.view.bounds.size.width; 
+            float viewHeight = self.view.bounds.size.height;
+            
+            float widthRatio = viewWidth / imageWidth; 
+            float heightRatio = viewHeight / imageHeight; 
+            
+            self.scrollView.zoomScale = MAX(widthRatio, heightRatio); 
+
+            
         }); 
             
     }); 

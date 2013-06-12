@@ -136,26 +136,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="h3c-4z-cjr">
                         <nil key="title"/>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="36m-TT-LR6">
-                            <rect key="frame" x="128" y="5" width="64" height="35"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" title="zoom1">
-                                <color key="titleColor" red="0.19607843458652496" green="0.30980393290519714" blue="0.5215686559677124" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="highlighted">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="zoom1:" destination="dbS-qo-t2l" eventType="touchUpInside" id="c3l-oK-dJT"/>
-                            </connections>
-                        </button>
-                        <barButtonItem key="rightBarButtonItem" title="zoom2" id="uiK-xZ-9yf">
-                            <connections>
-                                <action selector="zoomAndRefresh:" destination="dbS-qo-t2l" id="Amr-2g-GLe"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="YbE-u0-7hM" id="RxO-xJ-X4d"/>
@@ -298,6 +278,31 @@
             <point key="canvasLocation" x="-2461" y="464"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="MostRecentVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MostRecentVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="PicHunterTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTVC.h"/>
+        </class>
+        <class className="PicHunterTop20TVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTop20TVC.h"/>
+        </class>
+        <class className="PlacePhotosTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacePhotosTVC.h"/>
+        </class>
+        <class className="TopPlacePhotoVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacePhotoVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

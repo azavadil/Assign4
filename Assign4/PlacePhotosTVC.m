@@ -25,11 +25,6 @@
 }
 
 
-- (IBAction)refresh:(id)sender {
-    NSLog(@"list = %@", self.listOfPhotos);
-}
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

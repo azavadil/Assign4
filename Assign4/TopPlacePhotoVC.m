@@ -77,41 +77,102 @@
 
 #define MAXIMUM_CACHE_SIZE 10485760
 
+- (NSURL*)makeCacheURL
+{
+    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
+                                                  inDomains:NSUserDomainMask];  
+    
+    NSURL *cacheURL = [urlsArray lastObject]; 
+    return cacheURL; 
+}
+
 
 - (void)cachePhoto:(NSDictionary *)photoData imageToCache:(UIImage *)image
 {
-    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
-                                                      inDomains:NSUserDomainMask];  
     
-    NSURL *cacheURL = [urlsArray lastObject]; 
+    if(!image) return; 
     
-    NSMutableDictionary *currImages = [[NSMutableDictionary alloc] initWithContentsOfURL:cacheURL]; 
-    NSMutableArray *chronology;
+    NSURL *filePath = [[self makeCacheURL]URLByAppendingPathComponent:@"photoCache"];
     
-    while([currImages fileSize] > MAXIMUM_CACHE_SIZE)
+    
+    NSLog(@"filepath = %@", filePath); 
+    
+    // read the cache
+    NSMutableDictionary *cachedImages = [[NSMutableDictionary alloc] initWithContentsOfURL:filePath]; 
+    [cachedImages removeObjectForKey:@"chronology"];
+    if(!cachedImages) cachedImages = [[NSMutableDictionary alloc] init]; 
+    
+    
+    // extract the chronological order from the cache 
+    NSMutableArray *chronology = [cachedImages objectForKey:@"chronology"];
+    if(!chronology) chronology = [[NSMutableArray alloc] init]; 
+    
+    
+    NSLog(@"filesize = %f", [cachedImages fileSize]); 
+    NSLog(@"dict = %d", [cachedImages count]); 
+    
+    while([cachedImages fileSize] > MAXIMUM_CACHE_SIZE)
     {
         // store an array that keeps the order items are entered into the dictionary 
         
-        chronology = [currImages objectForKey:@"chronology"]; 
         NSString *currKey = [chronology objectAtIndex:0]; 
+        
+        NSLog(@"currKey = %@", currKey ); 
         [chronology removeObjectAtIndex:0];
-        [currImages removeObjectForKey:currKey]; 
+        [cachedImages removeObjectForKey:currKey]; 
     }
     
-    [chronology addObject:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
-    [currImages setObject:image forKey:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
-    [currImages setObject:chronology forKey:@"chronology"]; 
     
-    [currImages writeToURL:cacheURL atomically:YES]; 
+    NSLog(@"brkpt1 = %@", [photoData valueForKey:FLICKR_PHOTO_ID]);
+    [chronology addObject:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+    NSLog(@"pt2 = %d, %d", [chronology count], [cachedImages count]); 
+    [cachedImages setObject:chronology forKey:@"chronology"]; 
+    NSLog(@"pt3 = %d", [cachedImages count]); 
+    NSLog(@"pt4 = %@", image); 
+    NSData *pngImage = UIImagePNGRepresentation(image); 
+    [cachedImages setObject:pngImage forKey:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]];
+
+    NSLog(@"cache, chronology = %@", chronology); 
+    NSLog(@"cache = %d", [cachedImages count]); 
+    NSLog(@"*******");
+    [cachedImages writeToURL:filePath atomically:YES]; 
     
 }
 
+
+/* Fetch image:
+ * cache data structure
+ * dictionary of photo ID/images pairs 
+ * and a single NSArray chronology
+ */ 
 
 
 
 - (UIImage *)fetchImage:(NSDictionary *)photoData
 {
-    return nil; 
+    
+    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
+                                                  inDomains:NSUserDomainMask];  
+    
+    NSURL *filePath = [[urlsArray lastObject] URLByAppendingPathComponent:@"photoCache"]; 
+    NSDictionary *cachedImages = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
+    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[photoData valueForKey:FLICKR_PHOTO_ID]]]; 
+    
+        
+    if(cachedPhotoImage)
+    {
+        return cachedPhotoImage; 
+    }
+    else
+    {
+        UIImage *result = [UIImage imageWithData:
+                           [NSData dataWithContentsOfURL:
+                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+        
+        return result; 
+    }
+    
+
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -134,18 +195,31 @@
     dispatch_queue_t downloadQueue = dispatch_queue_create("topPlaceImage downloader", NULL); 
     dispatch_async(downloadQueue, ^{ 
     
-        UIImage *currImage = [UIImage imageWithData:
-                               [NSData dataWithContentsOfURL:
-                                [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
-        
+        UIImage *currImage = [self fetchImage:self.photoDictionary]; 
         dispatch_async(dispatch_get_main_queue(), ^{ 
             [spinner removeFromSuperview]; 
             self.imageView.image = currImage; 
             self.scrollView.delegate = self; 
             self.scrollView.contentSize = self.imageView.image.size; 
-            self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height); 
+            self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
+            
+            
+            //set the zoomRatio
+            
+            float imageWidth = self.imageView.image.size.width; 
+            float imageHeight = self.imageView.image.size.height; 
+            float viewWidth = self.view.bounds.size.width; 
+            float viewHeight = self.view.bounds.size.height;
+            
+            float widthRatio = viewWidth / imageWidth; 
+            float heightRatio = viewHeight / imageHeight; 
+            
+            self.scrollView.zoomScale = MAX(widthRatio, heightRatio); 
+            
+            
             self.title = [self.photoDictionary objectForKey:FLICKR_PHOTO_TITLE];
         }); 
+        [self cachePhoto:self.photoDictionary imageToCache:currImage]; 
         
     }); 
     
@@ -153,30 +227,6 @@
     
 }
 
-- (IBAction)zoomAndRefresh:(id)sender {
-    
-    CGRect visibleRect = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height); 
-    
-    [self.scrollView zoomToRect:visibleRect animated:YES]; 
-    
-    
-
-}
-
-- (IBAction)zoom1:(id)sender {
-      
-    float imageWidth = self.imageView.image.size.width; 
-    float imageHeight = self.imageView.image.size.height; 
-    float viewWidth = self.view.bounds.size.width; 
-    float viewHeight = self.view.bounds.size.height;
-    
-    float widthRatio = viewWidth / imageWidth; 
-    float heightRatio = viewHeight / imageHeight; 
-    
-       
-    self.scrollView.zoomScale = MAX(widthRatio, heightRatio); 
-
-}
 
 - (void)viewDidUnload
 {
