@@ -9,21 +9,44 @@
 #import "PlacePhotosTVC.h"
 #import "FlickrFetcher.h"
 #import "TopPlacePhotoVC.h" 
+#import "PhotoAnnotation.h" 
+#import "MapVC.h"
 
+
+@interface PlacePhotosTVC() 
+@property (nonatomic, strong) NSArray *annotationsForDestinationVC;
+- (void)updateAnnotationsForDestinationVC;
+@end
 
 @implementation PlacePhotosTVC
 
 @synthesize listOfPhotos = _listOfPhotos; 
+@synthesize annotationsForDestinationVC = _annotationsForDestinationVC; 
 
 - (void) setListOfPhotos:(NSArray *)listOfPhotos
 {
     if (listOfPhotos != _listOfPhotos) 
     {
         _listOfPhotos = listOfPhotos; 
+        [self updateAnnotationsForDestinationVC]; 
         if (self.tableView.window) [self.tableView reloadData]; 
     }
 }
 
+- (NSArray *)mapAnnotations
+{
+    NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:[self.listOfPhotos count]]; 
+    for (NSDictionary *photo in self.listOfPhotos)
+    {
+        [annotations addObject:[PhotoAnnotation annotationForPhoto:photo]]; 
+    }
+    return annotations; 
+}
+
+- (void)updateAnnotationsForDestinationVC
+{
+    self.annotationsForDestinationVC = [self mapAnnotations]; 
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -88,9 +111,13 @@
         NSDictionary *photoDict = [self.listOfPhotos objectAtIndex:self.tableView.indexPathForSelectedRow.row];
         [segue.destinationViewController setPhotoDictionary:photoDict];
     }
+    
 }
 
-
+- (IBAction)showMap:(id)sender
+{
+    [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
+}
 
 
 #define MOST_RECENT @"20_MostRecentPhotos" 

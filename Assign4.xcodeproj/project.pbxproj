@@ -20,6 +20,10 @@
 		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
 		99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */; };
 		99D8E8ED1766C91800FFB200 /* MostRecentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E8EC1766C91800FFB200 /* MostRecentVC.m */; };
+		99E62E1817693C3A00B760D3 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E62E1717693C3A00B760D3 /* MapVC.m */; };
+		99E62E1B17693CF100B760D3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E62E1A17693CF100B760D3 /* MapKit.framework */; };
+		99E62E1D17693CFC00B760D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E62E1C17693CFC00B760D3 /* CoreLocation.framework */; };
+		99E62E201769507100B760D3 /* PhotoAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E62E1F1769507000B760D3 /* PhotoAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +51,12 @@
 		99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacePhotoVC.m; sourceTree = "<group>"; };
 		99D8E8EB1766C91800FFB200 /* MostRecentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostRecentVC.h; sourceTree = "<group>"; };
 		99D8E8EC1766C91800FFB200 /* MostRecentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MostRecentVC.m; sourceTree = "<group>"; };
+		99E62E1617693C3A00B760D3 /* MapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
+		99E62E1717693C3A00B760D3 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
+		99E62E1A17693CF100B760D3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		99E62E1C17693CFC00B760D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		99E62E1E1769507000B760D3 /* PhotoAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoAnnotation.h; sourceTree = "<group>"; };
+		99E62E1F1769507000B760D3 /* PhotoAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99E62E1D17693CFC00B760D3 /* CoreLocation.framework in Frameworks */,
+				99E62E1B17693CF100B760D3 /* MapKit.framework in Frameworks */,
 				99464B8F17622C4E00D23765 /* UIKit.framework in Frameworks */,
 				99464B9117622C4E00D23765 /* Foundation.framework in Frameworks */,
 				99464B9317622C4E00D23765 /* CoreGraphics.framework in Frameworks */,
@@ -66,6 +78,8 @@
 		99464B7F17622C4E00D23765 = {
 			isa = PBXGroup;
 			children = (
+				99E62E1C17693CFC00B760D3 /* CoreLocation.framework */,
+				99E62E1A17693CF100B760D3 /* MapKit.framework */,
 				99464B9417622C4E00D23765 /* Assign4 */,
 				99464B8D17622C4E00D23765 /* Frameworks */,
 				99464B8B17622C4E00D23765 /* Products */,
@@ -106,6 +120,10 @@
 				99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */,
 				99D8E8EB1766C91800FFB200 /* MostRecentVC.h */,
 				99D8E8EC1766C91800FFB200 /* MostRecentVC.m */,
+				99E62E1617693C3A00B760D3 /* MapVC.h */,
+				99E62E1717693C3A00B760D3 /* MapVC.m */,
+				99E62E1E1769507000B760D3 /* PhotoAnnotation.h */,
+				99E62E1F1769507000B760D3 /* PhotoAnnotation.m */,
 				99464BA017622C4E00D23765 /* MainStoryboard.storyboard */,
 				99464B9517622C4E00D23765 /* Supporting Files */,
 			);
@@ -195,6 +213,8 @@
 				99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */,
 				99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */,
 				99D8E8ED1766C91800FFB200 /* MostRecentVC.m in Sources */,
+				99E62E1817693C3A00B760D3 /* MapVC.m in Sources */,
+				99E62E201769507100B760D3 /* PhotoAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

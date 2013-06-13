@@ -103,15 +103,41 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="qj8-AP-Y66">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="eCl-vb-2q6">
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="eCl-vb-2q6">
                             <connections>
                                 <action selector="refresh:" destination="RIH-oh-Qm6" id="Dz1-cF-esB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="vvZ-EC-dQU" kind="push" identifier="Show topPlaces Map" id="UTd-pi-UgW"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="-1600" y="-116"/>
+        </scene>
+        <scene sceneID="yjI-CI-lwv">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oVM-a8-lU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="vvZ-EC-dQU" customClass="MapVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Urk-Eo-zhT">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="RrN-o9-YC7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5pg-Ll-o8z"/>
+                    <connections>
+                        <outlet property="mapView" destination="RrN-o9-YC7" id="uG3-X5-eB4"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-1195" y="-718"/>
         </scene>
         <scene sceneID="RQE-zq-iaK">
             <objects>
@@ -279,6 +305,12 @@
         </scene>
     </scenes>
     <classes>
+        <class className="MapVC" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapVC.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
         <class className="MostRecentVC" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MostRecentVC.h"/>
             <relationships>

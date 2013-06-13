@@ -66,7 +66,8 @@
         dispatch_async(download_queue, ^{
             NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50];
             dispatch_async(dispatch_get_main_queue(), ^{ 
-                destinationVC.navigationItem.rightBarButtonItem = nil; 
+                UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:destinationVC action:@selector(showMap:)];
+                destinationVC.navigationItem.rightBarButtonItem = rightBarButtonItem; 
                 [segue.destinationViewController setListOfPhotos:photoDictionaries];
             }); 
         }); 
