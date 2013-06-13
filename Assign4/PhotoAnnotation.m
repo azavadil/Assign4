@@ -41,7 +41,7 @@
 {
     CLLocationCoordinate2D coordinate; 
     coordinate.latitude = [[self.photo objectForKey:FLICKR_LATITUDE] doubleValue]; 
-    coordinate.longitude = [[self.photo objectForKey:FLICKR_LATITUDE] doubleValue]; 
+    coordinate.longitude = [[self.photo objectForKey:FLICKR_LONGITUDE] doubleValue]; 
     return coordinate; 
 }
 

@@ -24,7 +24,7 @@
  * keep the mapView and annotations in sync
  */ 
 
--(void)updateMapView
+-(void)sychronizeMapView
 {
     if(self.mapView.annotations) [self.mapView removeAnnotations:self.mapView.annotations]; 
     if(self.annotations) [self.mapView addAnnotations:self.annotations]; 
@@ -33,13 +33,13 @@
 -(void)setMapView:(MKMapView *)mapView
 {
     _mapView = mapView; 
-    [self updateMapView]; 
+    [self sychronizeMapView]; 
 }
 
 -(void)setAnnotations:(NSArray *)annotations
 {
     _annotations = annotations; 
-    [self updateMapView]; 
+    [self sychronizeMapView]; 
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

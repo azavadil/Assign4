@@ -28,13 +28,15 @@
     if (listOfPhotos != _listOfPhotos) 
     {
         _listOfPhotos = listOfPhotos; 
-        [self updateAnnotationsForDestinationVC]; 
         if (self.tableView.window) [self.tableView reloadData]; 
     }
 }
 
+
+
 - (NSArray *)mapAnnotations
 {
+    
     NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:[self.listOfPhotos count]]; 
     for (NSDictionary *photo in self.listOfPhotos)
     {
@@ -119,7 +121,7 @@
 
 - (IBAction)showMap:(id)sender
 {
-    
+    [self updateAnnotationsForDestinationVC]; 
     [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
 }
 
