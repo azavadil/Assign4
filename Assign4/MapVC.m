@@ -68,13 +68,16 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // NSLog(@"annotations = %d", [self.annotations count]); 
+    // NSLog(@"mapannotation = %d", [self.mapView.annotations count]); 
 }
-*/
+
 
 - (void)viewDidUnload
 {
@@ -87,7 +90,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 @end

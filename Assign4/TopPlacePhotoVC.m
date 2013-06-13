@@ -12,8 +12,8 @@
 @interface TopPlacePhotoVC() <UIScrollViewDelegate>          //all methods in <UIScrollViewDelegate> are optional
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+- (NSURL*)makeCacheURL; 
 
 
 @end
@@ -73,7 +73,43 @@
 }
 */
 
+-(unsigned long long)sizeOfCacheContainer
+{
+    
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSString *filePath = [[[self makeCacheURL]URLByAppendingPathComponent:@"photoCache"] path]; 
+    NSDictionary *fileAttributes = [fileManager attributesOfItemAtPath:filePath error:NULL]; 
+	unsigned long long cacheSize = [fileAttributes fileSize]; 
+    return cacheSize; 
+}
 
+- (int)getSizeOfCache
+{
+    NSURL *filePath = [[self makeCacheURL]URLByAppendingPathComponent:@"photoCache"];
+    NSDictionary *cachedData = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
+    
+    int fileSize = 0; 
+    
+    for (id item in cachedData)
+    {
+        if([item isKindOfClass:[NSData class]])
+        {
+            fileSize += [item length];
+        }
+    }
+    return fileSize; 
+}
+
+-(int)getSizeOfDictionary:(NSDictionary *)dictionaryOfImageData
+{
+    int totalSize = 0; 
+    for(id item in dictionaryOfImageData)
+    {
+        NSData *imageValue = [dictionaryOfImageData valueForKey:item]; 
+        totalSize += [imageValue length]; 
+    }
+    return totalSize; 
+}
 
 #define MAXIMUM_CACHE_SIZE 10485760
 
@@ -95,46 +131,34 @@
     NSURL *filePath = [[self makeCacheURL]URLByAppendingPathComponent:@"photoCache"];
     
     
-    NSLog(@"filepath = %@", filePath); 
-    
     // read the cache
     NSMutableDictionary *cachedImages = [[NSMutableDictionary alloc] initWithContentsOfURL:filePath]; 
-    [cachedImages removeObjectForKey:@"chronology"];
     if(!cachedImages) cachedImages = [[NSMutableDictionary alloc] init]; 
     
     
     // extract the chronological order from the cache 
     NSMutableArray *chronology = [cachedImages objectForKey:@"chronology"];
+    [cachedImages removeObjectForKey:@"chronology"];
     if(!chronology) chronology = [[NSMutableArray alloc] init]; 
     
-    
-    NSLog(@"filesize = %f", [cachedImages fileSize]); 
-    NSLog(@"dict = %d", [cachedImages count]); 
-    
-    while([cachedImages fileSize] > MAXIMUM_CACHE_SIZE)
+    while( [self getSizeOfDictionary:cachedImages] > MAXIMUM_CACHE_SIZE )
     {
-        // store an array that keeps the order items are entered into the dictionary 
         
-        NSString *currKey = [chronology objectAtIndex:0]; 
-        
-        NSLog(@"currKey = %@", currKey ); 
-        [chronology removeObjectAtIndex:0];
-        [cachedImages removeObjectForKey:currKey]; 
+        if([chronology count] > 0)
+        {
+            NSString *currKey = [chronology objectAtIndex:0]; 
+            [chronology removeObjectAtIndex:0];
+            [cachedImages removeObjectForKey:currKey];
+            
+        }
     }
     
     
-    NSLog(@"brkpt1 = %@", [photoData valueForKey:FLICKR_PHOTO_ID]);
     [chronology addObject:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]]; 
-    NSLog(@"pt2 = %d, %d", [chronology count], [cachedImages count]); 
     [cachedImages setObject:chronology forKey:@"chronology"]; 
-    NSLog(@"pt3 = %d", [cachedImages count]); 
-    NSLog(@"pt4 = %@", image); 
     NSData *pngImage = UIImagePNGRepresentation(image); 
     [cachedImages setObject:pngImage forKey:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]];
 
-    NSLog(@"cache, chronology = %@", chronology); 
-    NSLog(@"cache = %d", [cachedImages count]); 
-    NSLog(@"*******");
     [cachedImages writeToURL:filePath atomically:YES]; 
     
 }

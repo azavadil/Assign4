@@ -111,11 +111,15 @@
         NSDictionary *photoDict = [self.listOfPhotos objectAtIndex:self.tableView.indexPathForSelectedRow.row];
         [segue.destinationViewController setPhotoDictionary:photoDict];
     }
-    
+    if([segue.identifier isEqualToString:@"Show topPlaces Map"])
+    {
+        [segue.destinationViewController setAnnotations:self.annotationsForDestinationVC]; 
+    }
 }
 
 - (IBAction)showMap:(id)sender
 {
+    
     [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
 }
 
