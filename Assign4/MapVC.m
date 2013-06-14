@@ -12,6 +12,7 @@
 #import "PhotoAnnotation.h"
 #import "FlickrFetcher.h" 
 #import "PlacePhotosTVC.h" 
+#import "TopPlacePhotoVC.h"
 
 @interface MapVC() <MKMapViewDelegate>   //EMD2 denote we implement protocol
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -134,6 +135,14 @@
     } 
 }
 
+- (void)setRightBarButtonItemInVCToSpinner:(UIViewController *)aViewController
+{
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
+    [spinner startAnimating]; 
+    
+    aViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
+}
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -142,13 +151,9 @@
     if([segue.identifier isEqualToString:@"Show topPlace Photos From Annotation"])
         
     {
-        
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
-        [spinner startAnimating]; 
-        
+     
         UIViewController *destinationVC = (UIViewController *)segue.destinationViewController; 
-        destinationVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
-        
+        [self setRightBarButtonItemInVCToSpinner:destinationVC];         
         
         /* there should always be only one annotation selected at a time 
          * to be defensive we pull out the first annotation
@@ -162,7 +167,7 @@
         
         NSDictionary *placeDict = annotation.place;
         
-        dispatch_queue_t download_queue = dispatch_queue_create("topPlacePhotos downloader", NULL); 
+        dispatch_queue_t download_queue = dispatch_queue_create("topPlacePhotos downloader annotation", NULL); 
         dispatch_async(download_queue, ^{
             NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50];
             dispatch_async(dispatch_get_main_queue(), ^{ 
@@ -176,7 +181,11 @@
     }
     if([segue.identifier isEqualToString:@"Show Photo From Annotation Origin"])
     {
-        
+        /* the imageViewVC takes care of downloading the photo
+         * all we need to do here is set the photoDictionary @property in the destinationVC
+         */ 
+        PhotoAnnotation *annotation = [[self.mapView selectedAnnotations] objectAtIndex:0];
+        [segue.destinationViewController setPhotoDictionary:annotation.photo];
     }
     
 }

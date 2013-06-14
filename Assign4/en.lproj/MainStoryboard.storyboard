@@ -143,6 +143,7 @@
                     <connections>
                         <outlet property="mapView" destination="RrN-o9-YC7" id="uG3-X5-eB4"/>
                         <segue destination="RIH-oh-Qm6" kind="push" identifier="Show topPlace Photos From Annotation" id="IPM-uy-zCz"/>
+                        <segue destination="dbS-qo-t2l" kind="push" identifier="Show Photo From Annotation Origin" id="OyD-i0-D1V"/>
                     </connections>
                 </viewController>
             </objects>
@@ -232,7 +233,7 @@
                     </navigationItem>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-2337" y="470"/>
+            <point key="canvasLocation" x="-2331" y="470"/>
         </scene>
         <scene sceneID="f4G-Vv-UNg">
             <objects>
@@ -327,5 +328,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="IMj-zC-0AB"/>
         <segue reference="IPM-uy-zCz"/>
+        <segue reference="OyD-i0-D1V"/>
     </inferredMetricsTieBreakers>
 </document>
