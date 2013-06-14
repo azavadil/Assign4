@@ -13,7 +13,7 @@
 #import "MapVC.h"
 
 
-@interface PlacePhotosTVC() 
+@interface PlacePhotosTVC() <MapVCImageSource> 
 @property (nonatomic, strong) NSArray *annotationsForDestinationVC;
 - (void)updateAnnotationsForDestinationVC;
 @end
@@ -115,8 +115,18 @@
     }
     if([segue.identifier isEqualToString:@"Show topPlaces Map"])
     {
+        MapVC *destinationMapVC = segue.destinationViewController; 
+        destinationMapVC.delegate = self; 
         [segue.destinationViewController setAnnotations:self.annotationsForDestinationVC]; 
     }
+}
+
+-(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id<MKAnnotation>)annotation
+{
+    PhotoAnnotation *photoAnnotation = (PhotoAnnotation *)annotation;
+    NSURL *url = [FlickrFetcher urlForPhoto:photoAnnotation.photo format:FlickrPhotoFormatSquare]; 
+    NSData *data = [NSData dataWithContentsOfURL:url]; 
+    return data ? [UIImage imageWithData:data] : nil; 
 }
 
 - (IBAction)showMap:(id)sender

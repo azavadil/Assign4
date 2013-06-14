@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.0" toolsVersion="1938" systemVersion="10K549" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Y1E-1Q-Mo6">
     <dependencies>
-        <development defaultVersion="4200" identifier="xcode"/>
+        <development version="4200" defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="933"/>
     </dependencies>
     <scenes>
@@ -49,7 +49,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Top Places" id="7Pu-zk-QSp">
-                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="h5R-Wg-wtY">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" id="h5R-Wg-wtY">
                             <connections>
                                 <action selector="refresh:" destination="WeO-9o-FY2" id="yh1-46-YLi"/>
                             </connections>
@@ -304,37 +304,6 @@
             <point key="canvasLocation" x="-2461" y="464"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="MapVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="MostRecentVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MostRecentVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="PicHunterTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTVC.h"/>
-        </class>
-        <class className="PicHunterTop20TVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PicHunterTop20TVC.h"/>
-        </class>
-        <class className="PlacePhotosTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacePhotosTVC.h"/>
-        </class>
-        <class className="TopPlacePhotoVC" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopPlacePhotoVC.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

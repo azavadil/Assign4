@@ -7,6 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@class MapVC; 
+
+// we're going to ask this delegate anytime we need an image for the annotation
+
+@protocol MapVCImageSource <NSObject>
+-(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id <MKAnnotation>)annotation;
+@end
 
 @interface MapVC : UIViewController
 
@@ -22,5 +31,7 @@
  */ 
 
 @property (nonatomic, strong) NSArray *annotations; 
+
+@property (nonatomic, weak) id<MapVCImageSource> delegate; 
 
 @end

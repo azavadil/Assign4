@@ -9,7 +9,7 @@
 #import "MapVC.h"
 #import <MapKit/MapKit.h> 
 
-@interface MapVC()
+@interface MapVC() <MKMapViewDelegate>   //EMD2 denote we implement protocol
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -18,6 +18,7 @@
 @implementation MapVC
 @synthesize mapView = _mapView;
 @synthesize annotations = _annotations; 
+@synthesize delegate = _delegate; 
 
 
 /* setMapView, setAnnoations, updateMapView
@@ -61,22 +62,55 @@
 
 #pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
+/* establish mapView delegate EMD1
+ * EMD1
+ */
+
+-(void)viewDidLoad
 {
+    [super viewDidLoad]; 
+    self.mapView.delegate = self;
+    [self sychronizeMapView]; 
 }
-*/
+
+/* EMD3. most important method
+ * like cellForRowAtIndexPath
+ * MKMapView has a built-in delegate method MKMapViewDelegate
+ * We're going to establish the MapVC as the delegate for the mapView
+ * mapView's main delegate method to get us a view for a selected annotation
+ * similar to the button dance
+ * note that we don't download the image in this method 
+ * this method is only for creating the generic pin. we don't download the image
+ * until the pin is actually selected 
+ */ 
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    MKAnnotationView *aView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MapPin"]; 
+    if(!aView)
+    {
+        aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapPin"]; 
+        aView.canShowCallout = YES; 
+        aView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    }
+    // set @property annotation for the case were we deque 
+    // (i.e. if we deque if{} block doesn't execute and annotation hasn't be set)
+    aView.annotation = annotation;
+    [(UIImageView *)aView.leftCalloutAccessoryView setImage:nil]; 
+    return aView; 
+                                          
+}
 
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
+/* EMD4. set the image if a pin is selected
+ */ 
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)selectedPin
 {
-    [super viewDidLoad];
-    
-    // NSLog(@"annotations = %d", [self.annotations count]); 
-    // NSLog(@"mapannotation = %d", [self.mapView.annotations count]); 
+    UIImage *image = [self.delegate provideImageToMapVC:self imageForAnnotation:selectedPin.annotation]; 
+    [(UIImageView *)selectedPin.leftCalloutAccessoryView setImage:image];
 }
+
 
 
 - (void)viewDidUnload

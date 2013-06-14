@@ -161,6 +161,8 @@
 
     [cachedImages writeToURL:filePath atomically:YES]; 
     
+    //NSLog(@"cachePhoto = %d, %d", [cachedImages count], [self sizeOfCacheContainer]); 
+    
 }
 
 
