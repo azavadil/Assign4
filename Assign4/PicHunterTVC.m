@@ -9,6 +9,12 @@
 #import "PicHunterTVC.h"
 #import "FlickrFetcher.h"
 #import "PlacePhotosTVC.h" 
+#import "MapVC.h"
+#import "PlaceAnnotation.h"
+
+@interface PicHunterTVC()
+- (NSArray *)mapAnnotations; 
+@end
 
 
 @implementation PicHunterTVC
@@ -22,7 +28,7 @@
     
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
     [spinner startAnimating]; 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
 
     
     dispatch_queue_t download_queue = dispatch_queue_create("topPlaces downloader", NULL); 
@@ -30,11 +36,15 @@
         NSArray *topPlaces = [FlickrFetcher topPlaces]; 
         dispatch_async(dispatch_get_main_queue(), ^{   
             self.topPlaces = topPlaces;
-            self.navigationItem.rightBarButtonItem = sender; 
+            self.navigationItem.leftBarButtonItem = sender; 
         });
     }); 
     
     dispatch_release(download_queue);
+}
+- (IBAction)showMap:(id)sender {
+    
+    [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
 }
 
 - (void) setTopPlaces:(NSArray *)topPlaces
@@ -74,7 +84,26 @@
         dispatch_release(download_queue); 
         
     }
+    
+    if([segue.identifier isEqualToString:@"Show topPlaces Map"])
+    {
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]]; 
+    }
 }
+
+- (NSArray *)mapAnnotations
+{
+    
+    NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:[self.topPlaces count]]; 
+    for (NSDictionary *topPlace in self.topPlaces)
+    {
+        [annotations addObject:[PlaceAnnotation annotationForPlace:topPlace]]; 
+    }
+    return annotations; 
+}
+
+
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -103,7 +132,7 @@
     
     // Configure the cell...
     NSDictionary *topPlacesEntry = [self.topPlaces objectAtIndex:indexPath.row]; 
-    NSString *placeName = [topPlacesEntry objectForKey:@"_content"]; 
+    NSString *placeName = [topPlacesEntry objectForKey:FLICKR_PLACE_NAME]; 
         
     NSMutableArray *tokens = [[placeName componentsSeparatedByString:@","] mutableCopy]; 
     cell.textLabel.text = [tokens objectAtIndex:0];
@@ -114,7 +143,6 @@
  
     cell.detailTextLabel.text = [[tokens objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]] componentsJoinedByString:@", "]; 
 
-     
     return cell;
 }
 

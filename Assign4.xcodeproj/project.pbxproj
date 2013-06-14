@@ -18,6 +18,7 @@
 		99464BB117622E8E00D23765 /* FlickrFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB017622E8E00D23765 /* FlickrFetcher.m */; };
 		99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB31762313D00D23765 /* PicHunterTop20TVC.m */; };
 		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
+		99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B90892176AAA3C0032D870 /* PlaceAnnotation.m */; };
 		99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */; };
 		99D8E8ED1766C91800FFB200 /* MostRecentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D8E8EC1766C91800FFB200 /* MostRecentVC.m */; };
 		99E62E1817693C3A00B760D3 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E62E1717693C3A00B760D3 /* MapVC.m */; };
@@ -47,6 +48,8 @@
 		99464BB31762313D00D23765 /* PicHunterTop20TVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHunterTop20TVC.m; sourceTree = "<group>"; };
 		99464BB51762529500D23765 /* PlacePhotosTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePhotosTVC.h; sourceTree = "<group>"; };
 		99464BB61762529500D23765 /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
+		99B90891176AAA3C0032D870 /* PlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceAnnotation.h; sourceTree = "<group>"; };
+		99B90892176AAA3C0032D870 /* PlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceAnnotation.m; sourceTree = "<group>"; };
 		99CE616D176617E00090D4EE /* TopPlacePhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacePhotoVC.h; sourceTree = "<group>"; };
 		99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacePhotoVC.m; sourceTree = "<group>"; };
 		99D8E8EB1766C91800FFB200 /* MostRecentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostRecentVC.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				99E62E1717693C3A00B760D3 /* MapVC.m */,
 				99E62E1E1769507000B760D3 /* PhotoAnnotation.h */,
 				99E62E1F1769507000B760D3 /* PhotoAnnotation.m */,
+				99B90891176AAA3C0032D870 /* PlaceAnnotation.h */,
+				99B90892176AAA3C0032D870 /* PlaceAnnotation.m */,
 				99464BA017622C4E00D23765 /* MainStoryboard.storyboard */,
 				99464B9517622C4E00D23765 /* Supporting Files */,
 			);
@@ -215,6 +220,7 @@
 				99D8E8ED1766C91800FFB200 /* MostRecentVC.m in Sources */,
 				99E62E1817693C3A00B760D3 /* MapVC.m in Sources */,
 				99E62E201769507100B760D3 /* PhotoAnnotation.m in Sources */,
+				99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

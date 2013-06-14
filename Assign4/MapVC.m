@@ -8,11 +8,13 @@
 
 #import "MapVC.h"
 #import <MapKit/MapKit.h> 
+#import "PlaceAnnotation.h"
+#import "PhotoAnnotation.h"
+#import "FlickrFetcher.h" 
+#import "PlacePhotosTVC.h" 
 
 @interface MapVC() <MKMapViewDelegate>   //EMD2 denote we implement protocol
-
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-
 @end
 
 @implementation MapVC
@@ -69,6 +71,8 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad]; 
+    
+    // mapVC gets involved as mapView delegate
     self.mapView.delegate = self;
     [self sychronizeMapView]; 
 }
@@ -92,6 +96,8 @@
         aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapPin"]; 
         aView.canShowCallout = YES; 
         aView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
     }
     // set @property annotation for the case were we deque 
     // (i.e. if we deque if{} block doesn't execute and annotation hasn't be set)
@@ -109,6 +115,70 @@
 {
     UIImage *image = [self.delegate provideImageToMapVC:self imageForAnnotation:selectedPin.annotation]; 
     [(UIImageView *)selectedPin.leftCalloutAccessoryView setImage:image];
+}
+
+- (void)mapView:(MKMapView *)mapView 
+ annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    
+    if ([(UIButton*)control buttonType] == UIButtonTypeDetailDisclosure){
+        // Do your thing when the detailDisclosureButton is touched
+        if([[self.annotations objectAtIndex:0] isKindOfClass:[PlaceAnnotation class]])
+        {
+            [self performSegueWithIdentifier:@"Show topPlace Photos From Annotation" sender:self]; 
+        }
+        else if([[self.annotations objectAtIndex:0] isKindOfClass:[PhotoAnnotation class]])
+        {
+            [self performSegueWithIdentifier:@"Show Photo From Annotation Origin" sender:self]; 
+        }
+                
+    } 
+}
+
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // 'From Annotation' is a reminder that the origin of this action was an annotation
+    if([segue.identifier isEqualToString:@"Show topPlace Photos From Annotation"])
+        
+    {
+        
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
+        [spinner startAnimating]; 
+        
+        UIViewController *destinationVC = (UIViewController *)segue.destinationViewController; 
+        destinationVC.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner]; 
+        
+        
+        /* there should always be only one annotation selected at a time 
+         * to be defensive we pull out the first annotation
+         */
+        PlaceAnnotation *annotation = [[self.mapView selectedAnnotations] objectAtIndex:0];
+        
+        /* FlickrFetcher needs a dictionary for a topPlace 
+         * For convience we store the dictionary that represents the place with the annotation
+         * therefore it's simple to get the dictionary that represents the place 
+         */ 
+        
+        NSDictionary *placeDict = annotation.place;
+        
+        dispatch_queue_t download_queue = dispatch_queue_create("topPlacePhotos downloader", NULL); 
+        dispatch_async(download_queue, ^{
+            NSArray *photoDictionaries = [FlickrFetcher photosInPlace:placeDict maxResults:50];
+            dispatch_async(dispatch_get_main_queue(), ^{ 
+                UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:destinationVC action:@selector(showMap:)];
+                destinationVC.navigationItem.rightBarButtonItem = rightBarButtonItem; 
+                [segue.destinationViewController setListOfPhotos:photoDictionaries];
+            }); 
+        }); 
+        dispatch_release(download_queue); 
+        
+    }
+    if([segue.identifier isEqualToString:@"Show Photo From Annotation Origin"])
+    {
+        
+    }
+    
 }
 
 

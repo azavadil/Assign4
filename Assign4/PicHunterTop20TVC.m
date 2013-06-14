@@ -9,8 +9,14 @@
 #import "PicHunterTop20TVC.h"
 #import "FlickrFetcher.h"
 #import "MostRecentVC.h"
+#import "PhotoAnnotation.h"
+#import "MapVC.h"
 
-@implementation PicHunterTop20TVC
+@interface PicHunterTop20TVC() <MapVCImageSource> 
+@end
+
+
+@implementation PicHunterTop20TVC 
 
 @synthesize photoDictionaries = _photoDictionaries; 
 
@@ -119,6 +125,30 @@
     
 }
 
+
+/* CODE FOR SHOWING MAP */ 
+
+
+- (NSArray *)mapAnnotations
+{
+    NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:[self.photoDictionaries count]]; 
+    for (NSDictionary *photo in self.photoDictionaries)
+    {
+        [annotations addObject:[PhotoAnnotation annotationForPhoto:photo]]; 
+    }
+    return annotations; 
+}
+
+-(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id<MKAnnotation>)annotation
+{
+    PhotoAnnotation *photoAnnotation = (PhotoAnnotation *)annotation;
+    NSURL *url = [FlickrFetcher urlForPhoto:photoAnnotation.photo format:FlickrPhotoFormatSquare]; 
+    NSData *data = [NSData dataWithContentsOfURL:url]; 
+    return data ? [UIImage imageWithData:data] : nil; 
+}
+
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"Show Recent Photo"])
@@ -127,6 +157,13 @@
         NSDictionary *photoDict = [self.photoDictionaries objectAtIndex:self.tableView.indexPathForSelectedRow.row];
         [segue.destinationViewController setRecentPhotoDictionary:photoDict];
     }
+    if([segue.identifier isEqualToString:@"Show recentPhotos Map"])
+    {
+        MapVC *destinationMapVC = segue.destinationViewController; 
+        destinationMapVC.delegate = self; 
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]]; 
+    }
+    
 }
 
 

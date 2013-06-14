@@ -54,10 +54,18 @@
                                 <action selector="refresh:" destination="WeO-9o-FY2" id="yh1-46-YLi"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="2Uc-de-h68">
+                            <connections>
+                                <action selector="showMap:" destination="WeO-9o-FY2" id="tfr-Mf-lB3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="vvZ-EC-dQU" kind="push" identifier="Show topPlaces Map" id="iNM-O3-luf"/>
+                    </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-2015" y="-116"/>
+            <point key="canvasLocation" x="-2337" y="-106"/>
         </scene>
         <scene sceneID="fgY-4w-d95">
             <objects>
@@ -134,10 +142,11 @@
                     <navigationItem key="navigationItem" id="5pg-Ll-o8z"/>
                     <connections>
                         <outlet property="mapView" destination="RrN-o9-YC7" id="uG3-X5-eB4"/>
+                        <segue destination="RIH-oh-Qm6" kind="push" identifier="Show topPlace Photos From Annotation" id="IPM-uy-zCz"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-1195" y="-718"/>
+            <point key="canvasLocation" x="-1799" y="-782"/>
         </scene>
         <scene sceneID="RQE-zq-iaK">
             <objects>
@@ -214,10 +223,16 @@
                             <outlet property="delegate" destination="rN3-0O-lGk" id="fdu-Zx-6Ve"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Last 20" id="lfd-Ex-xLV"/>
+                    <navigationItem key="navigationItem" title="Last 20" id="lfd-Ex-xLV">
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="N71-XQ-aZK">
+                            <connections>
+                                <segue destination="vvZ-EC-dQU" kind="push" identifier="Show recentPhotos Map" id="IMj-zC-0AB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="-2023" y="464"/>
+            <point key="canvasLocation" x="-2337" y="470"/>
         </scene>
         <scene sceneID="f4G-Vv-UNg">
             <objects>
@@ -265,7 +280,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-2461" y="-116"/>
+            <point key="canvasLocation" x="-2783" y="-106"/>
         </scene>
         <scene sceneID="xgA-5q-Oyf">
             <objects>
@@ -283,7 +298,7 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-2870" y="134"/>
+            <point key="canvasLocation" x="-3192" y="144"/>
         </scene>
         <scene sceneID="wfG-jN-oou">
             <objects>
@@ -301,7 +316,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-2461" y="464"/>
+            <point key="canvasLocation" x="-2783" y="464"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -309,4 +324,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="IMj-zC-0AB"/>
+        <segue reference="IPM-uy-zCz"/>
+    </inferredMetricsTieBreakers>
 </document>
