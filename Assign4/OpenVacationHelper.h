@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 __MyCompanyName__. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h> 
 
 @interface OpenVacationHelper : NSObject
+
+typedef void(^completion_block_t)(UIManagedDocument *vacation); 
+
++ (void)openVacation:(NSString *)vacationName usingBlock:(completion_block_t)completionBlock; 
 
 @end
