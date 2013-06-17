@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990D505C176F89540066F16B /* OpenVacationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 990D505B176F89540066F16B /* OpenVacationHelper.m */; };
 		99464B8F17622C4E00D23765 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99464B8E17622C4E00D23765 /* UIKit.framework */; };
 		99464B9117622C4E00D23765 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99464B9017622C4E00D23765 /* Foundation.framework */; };
 		99464B9317622C4E00D23765 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99464B9217622C4E00D23765 /* CoreGraphics.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		990D505A176F89540066F16B /* OpenVacationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenVacationHelper.h; sourceTree = "<group>"; };
+		990D505B176F89540066F16B /* OpenVacationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenVacationHelper.m; sourceTree = "<group>"; };
 		99464B8A17622C4E00D23765 /* Assign4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assign4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99464B8E17622C4E00D23765 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		99464B9017622C4E00D23765 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -110,6 +113,8 @@
 		99464B9417622C4E00D23765 /* Assign4 */ = {
 			isa = PBXGroup;
 			children = (
+				990D505A176F89540066F16B /* OpenVacationHelper.h */,
+				990D505B176F89540066F16B /* OpenVacationHelper.m */,
 				99464BAE17622E8E00D23765 /* FlickrAPIKey.h */,
 				99464BAF17622E8E00D23765 /* FlickrFetcher.h */,
 				99464BB017622E8E00D23765 /* FlickrFetcher.m */,
@@ -221,6 +226,7 @@
 				99E62E1817693C3A00B760D3 /* MapVC.m in Sources */,
 				99E62E201769507100B760D3 /* PhotoAnnotation.m in Sources */,
 				99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */,
+				990D505C176F89540066F16B /* OpenVacationHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
