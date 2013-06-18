@@ -8,6 +8,7 @@
 
 #import "PlaceItineraryTVC.h"
 #import "OpenVacationHelper.h" 
+#import "Place.h"
 
 
 @implementation PlaceItineraryTVC
@@ -56,7 +57,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"Itinerary Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -64,6 +65,9 @@
     }
     
     // Configure the cell...
+    
+    Place *place = [self.fetchedResultsController objectAtIndexPath:indexPath]; 
+    cell.textLabel.text = place.placeName; 
     
     return cell;
 }
