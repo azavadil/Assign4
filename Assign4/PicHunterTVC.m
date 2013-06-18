@@ -87,6 +87,7 @@
     
     if([segue.identifier isEqualToString:@"Show topPlaces Map"])
     {
+        NSLog(@"preparing for map = %d", [[self mapAnnotations] count]); 
         [segue.destinationViewController setAnnotations:[self mapAnnotations]]; 
     }
 }

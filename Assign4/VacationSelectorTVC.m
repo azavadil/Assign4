@@ -59,13 +59,10 @@
         NSArray *savedVacations = [[NSArray alloc] initWithObjects:@"myVacation", nil]; 
         [savedVacations writeToURL:url atomically:YES]; 
         self.vacations = savedVacations; 
-        
-        NSLog(@"didn't exist = %@", self.vacations);
     }
     else
     {
         self.vacations = [[NSArray alloc] initWithContentsOfURL:url]; 
-        NSLog(@"did exist = %@", self.vacations);
     }
     
 }
@@ -112,10 +109,32 @@
     return url; 
 }
 
+
+
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.vacations count]; 
 }
+
+
+
+
+
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
+{
+    if([segue.destinationViewController respondsToSelector:@selector(setVacationName:)])
+    {
+        NSLog(@"cell title = %@", [[sender textLabel] text]); 
+        [segue.destinationViewController performSelector:@selector(setVacationName:) withObject:[[sender textLabel] text]]; 
+    }
+}
+
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

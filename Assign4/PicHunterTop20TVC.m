@@ -8,7 +8,7 @@
 
 #import "PicHunterTop20TVC.h"
 #import "FlickrFetcher.h"
-#import "MostRecentVC.h"
+#import "TopPlacePhotoVC.h" 
 #import "PhotoAnnotation.h"
 #import "MapVC.h"
 
@@ -155,7 +155,7 @@
     {
         
         NSDictionary *photoDict = [self.photoDictionaries objectAtIndex:self.tableView.indexPathForSelectedRow.row];
-        [segue.destinationViewController setRecentPhotoDictionary:photoDict];
+        [segue.destinationViewController setPhotoDictionary:photoDict];
     }
     if([segue.identifier isEqualToString:@"Show recentPhotos Map"])
     {
