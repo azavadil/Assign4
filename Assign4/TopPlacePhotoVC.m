@@ -13,7 +13,10 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+- (UIImage *)fetchImageWithDictionary; 
 - (NSURL*)makeCacheURL; 
+- (UIImage *)fetchImageWithDatabase;
 
 
 @end
@@ -23,7 +26,8 @@
 @synthesize imageView = _imageView;
 
 
-@synthesize  photoDictionary = _photoDictionary; 
+@synthesize  photoDictionary = _photoDictionary;
+@synthesize photo = _photo; 
 @synthesize fileManager = _fileManager; 
 
 - (NSFileManager*)fileManager
@@ -46,32 +50,10 @@
     return self.imageView; 
 }
 
-/*
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.imageView.image = [UIImage imageWithData:
-                            [NSData dataWithContentsOfURL:
-                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatLarge]]];
-}
-*/ 
- 
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
 
-#pragma mark - View lifecycle
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
+
 
 -(unsigned long long)sizeOfCacheContainer
 {
@@ -82,6 +64,11 @@
 	unsigned long long cacheSize = [fileAttributes fileSize]; 
     return cacheSize; 
 }
+
+
+
+
+
 
 - (int)getSizeOfCache
 {
@@ -100,6 +87,10 @@
     return fileSize; 
 }
 
+
+
+
+
 -(int)getSizeOfDictionary:(NSDictionary *)dictionaryOfImageData
 {
     int totalSize = 0; 
@@ -111,6 +102,10 @@
     return totalSize; 
 }
 
+
+
+
+
 #define MAXIMUM_CACHE_SIZE 10485760
 
 - (NSURL*)makeCacheURL
@@ -118,9 +113,12 @@
     NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
                                                   inDomains:NSUserDomainMask];  
     
-    NSURL *cacheURL = [urlsArray lastObject]; 
-    return cacheURL; 
+    return [urlsArray lastObject]; 
 }
+
+
+
+
 
 
 - (void)cachePhoto:(NSDictionary *)photoData imageToCache:(UIImage *)image
@@ -152,18 +150,39 @@
             
         }
     }
+        
+    // check that the image isn't already in the cache
+    id obj = [cachedImages objectForKey:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+    if(!obj)
+    {
     
-    
-    [chronology addObject:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]]; 
-    [cachedImages setObject:chronology forKey:@"chronology"]; 
-    NSData *pngImage = UIImagePNGRepresentation(image); 
-    [cachedImages setObject:pngImage forKey:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]];
+        [chronology addObject:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+        [cachedImages setObject:chronology forKey:@"chronology"]; 
+        NSData *pngImage = UIImagePNGRepresentation(image); 
+        [cachedImages setObject:pngImage forKey:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]];
 
-    [cachedImages writeToURL:filePath atomically:YES]; 
-    
+        [cachedImages writeToURL:filePath atomically:YES]; 
+    }
     //NSLog(@"cachePhoto = %d, %d", [cachedImages count], [self sizeOfCacheContainer]); 
     
 }
+
+
+- (UIImage *)fetchImage
+{
+    UIImage *image = nil;
+    
+    if(self.photoDictionary)
+    {
+        image = [self fetchImageWithDictionary]; 
+    }
+    else if(self.photo)
+    {
+        image = [self fetchImageWithDatabase]; 
+    }
+    return image; 
+}
+
 
 
 /* Fetch image:
@@ -173,33 +192,59 @@
  */ 
 
 
-
-- (UIImage *)fetchImage:(NSDictionary *)photoData
+- (UIImage *)fetchImageWithDictionary
 {
     
-    NSArray *urlsArray = [self.fileManager URLsForDirectory:NSCachesDirectory 
-                                                  inDomains:NSUserDomainMask];  
+    UIImage *image = nil; 
     
-    NSURL *filePath = [[urlsArray lastObject] URLByAppendingPathComponent:@"photoCache"]; 
+    NSURL *url = [self makeCacheURL]; 
+    NSURL *filePath = [url URLByAppendingPathComponent:@"photoCache"]; 
     NSDictionary *cachedImages = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
-    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[photoData valueForKey:FLICKR_PHOTO_ID]]]; 
+    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[self.photoDictionary valueForKey:FLICKR_PHOTO_ID]]]; 
     
         
+    if(cachedPhotoImage)
+    {
+        image = cachedPhotoImage; 
+    }
+    else
+    {
+        image = [UIImage imageWithData:
+                           [NSData dataWithContentsOfURL:
+                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+    }
+    return image; 
+}
+
+
+
+- (UIImage *)fetchImageWithDatabase
+{
+    UIImage *image = nil; 
+    
+    NSURL *url = [self makeCacheURL]; 
+    
+    NSURL *filePath = [url URLByAppendingPathComponent:@"photoCache"]; 
+    NSDictionary *cachedImages = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
+    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[self.photoDictionary valueForKey:FLICKR_PHOTO_ID]]]; 
+    
+    
     if(cachedPhotoImage)
     {
         return cachedPhotoImage; 
     }
     else
     {
-        UIImage *result = [UIImage imageWithData:
+        image = [UIImage imageWithData:
                            [NSData dataWithContentsOfURL:
                             [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
-        
-        return result; 
     }
-    
-
+    return image; 
 }
+
+
+
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 /* viewDidLoad is the first place we want to think about putting things
@@ -221,7 +266,7 @@
     dispatch_queue_t downloadQueue = dispatch_queue_create("topPlaceImage downloader", NULL); 
     dispatch_async(downloadQueue, ^{ 
     
-        UIImage *currImage = [self fetchImage:self.photoDictionary]; 
+        UIImage *currImage = [self fetchImage]; 
         dispatch_async(dispatch_get_main_queue(), ^{ 
             [spinner removeFromSuperview]; 
             self.imageView.image = currImage; 

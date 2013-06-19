@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Photo.h"
 
 @interface TopPlacePhotoVC : UIViewController
 
-@property (nonatomic, strong) NSDictionary *photoDictionary;  
+@property (nonatomic, strong) NSDictionary *photoDictionary;
+@property (nonatomic, strong) Photo *photo; 
 
 @property (nonatomic, strong) NSFileManager *fileManager; 
 

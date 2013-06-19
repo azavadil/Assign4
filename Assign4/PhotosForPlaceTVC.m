@@ -8,6 +8,7 @@
 
 #import "PhotosForPlaceTVC.h"
 #import "OpenVacationHelper.h"
+#import "Photo.h"
 
 
 @implementation PhotosForPlaceTVC
@@ -32,6 +33,10 @@
                                                                           sectionNameKeyPath:nil 
                                                                                    cacheName:nil]; 
 }
+
+
+
+
 
 
 - (void) openDatabase 
@@ -67,6 +72,28 @@
     // Configure the cell...
     
     return cell;
+}
+
+
+
+
+
+
+
+/* generic version of prepareForSegue
+ * prepareForSegue will set the @property photo on the topPlacePhotoVC
+ * 
+*/ 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender]; 
+    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath]; 
+    
+    
+    if([segue.destinationViewController respondsToSelector:@selector(setPhoto:)]){
+        [segue.destinationViewController performSelector:@selector(setPhoto:) withObject:photo]; 
+    }
 }
 
 
