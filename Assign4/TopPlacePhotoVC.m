@@ -29,6 +29,7 @@
 @synthesize  photoDictionary = _photoDictionary;
 @synthesize photo = _photo; 
 @synthesize fileManager = _fileManager; 
+@synthesize vacationName = _vacationName; 
 
 - (NSFileManager*)fileManager
 {
@@ -226,18 +227,15 @@
     
     NSURL *filePath = [url URLByAppendingPathComponent:@"photoCache"]; 
     NSDictionary *cachedImages = [[NSDictionary alloc] initWithContentsOfURL:filePath]; 
-    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:[self.photoDictionary valueForKey:FLICKR_PHOTO_ID]]]; 
-    
+    UIImage *cachedPhotoImage = [UIImage imageWithData:[cachedImages valueForKey:self.photo.unique]];  
     
     if(cachedPhotoImage)
     {
-        return cachedPhotoImage; 
+        image = cachedPhotoImage; 
     }
     else
     {
-        image = [UIImage imageWithData:
-                           [NSData dataWithContentsOfURL:
-                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+        image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.photo.imageURL]]];
     }
     return image; 
 }

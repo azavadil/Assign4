@@ -197,7 +197,7 @@
         <scene sceneID="RQE-zq-iaK">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Xb-AO-Y09" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="dbS-qo-t2l" customClass="TopPlacePhotoVC" sceneMemberID="viewController">
+                <viewController id="dbS-qo-t2l" customClass="DisplayPhotoVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HOJ-km-pGq">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -526,6 +526,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="DisplayPhotoVC" superclassName="TopPlacePhotoVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DisplayPhotoVC.h"/>
+        </class>
         <class className="ItineraryTVC" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ItineraryTVC.h"/>
         </class>

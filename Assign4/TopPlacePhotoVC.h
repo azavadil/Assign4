@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSDictionary *photoDictionary;
 @property (nonatomic, strong) Photo *photo; 
+@property (nonatomic, strong) NSString *vacationName; 
 
 @property (nonatomic, strong) NSFileManager *fileManager; 
 

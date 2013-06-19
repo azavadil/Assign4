@@ -8,6 +8,7 @@
 
 #import "Photo+CreatePhotoWithFlickrData.h"
 #import "FlickrFetcher.h"
+#import "Place+Create.h"
 
 @implementation Photo (CreatePhotoWithFlickrData)
 
@@ -46,7 +47,7 @@
         photo.title = [flickrInfo objectForKey:FLICKR_PHOTO_TITLE]; 
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString]; 
-        //photo.whichVacation = [Photographer photographerWithName:[flickrInfo objectForKey:FLICKR_PHOTO_OWNER] inManagedObjectContect:context];
+        photo.fromPlace = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContect:context];
     }
     else if([matches count] == 1)
     {
@@ -55,6 +56,42 @@
     return photo; 
     
 }
+
+
++ (void)deletePhotoWithFlickrInfo:(NSDictionary *)flickrInfo inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    Photo *photo = nil; 
+    
+    
+    /* note that we only want to store unique photos
+     * therefore we query the database to see if the photo exists
+     *
+     * note that @Photo matches the Photo entity we created
+     */ 
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"]; 
+    
+    
+    // this code builds the query/request
+    request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", [flickrInfo objectForKey:FLICKR_PHOTO_ID]];  
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
+    
+    
+    // this code executes the query/request
+    NSError *error = nil;
+    NSArray *matches = [context executeFetchRequest:request error:&error]; 
+    
+    if(!matches || [matches count] > 1 || [matches count] == 0) 
+    {
+        // handle error
+    }
+    else if([matches count] == 1)
+    {
+        [context deleteObject:photo]; 
+    }
+}
+
 
 
 @end

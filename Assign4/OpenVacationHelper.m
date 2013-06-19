@@ -13,7 +13,7 @@
 + (void)openVacation:(NSString *)vacationName usingBlock:(completion_block_t)completionBlock
 {
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
-    NSURL *appDirectoryURL = [url URLByAppendingPathComponent:@"MyVacations"]; 
+    NSURL *appDirectoryURL = [url URLByAppendingPathComponent:@"VacationsDirectory"]; 
     
     
     // if the directory doesn't exist, create it /NSDocumentDirector/MyVacations

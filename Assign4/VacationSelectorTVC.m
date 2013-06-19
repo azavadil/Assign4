@@ -23,6 +23,29 @@
 
 @synthesize vacations = _vacations; 
 
+
+
+
+/* helper method to generate the NSDocumentsDirectory URL
+ * path is /NSDocumentDirectory/ListOfVacations
+ */ 
+
+- (NSURL *)makeVacationsArrayURL
+{
+    
+    // NSDocumentDirectory/savedVacations   
+    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
+    url = [url URLByAppendingPathComponent:@"ListOfVacations"]; 
+    return url; 
+}
+
+
+
+
+
+
+
+
 /* we write to the NSDocumentsDirectory in the setter
  * to keep the TVC and the document synchronized
  */ 
@@ -43,29 +66,6 @@
 
 
 
-/* setupVacationsArray is called if we reach 
- * viewDidLoad and self.vacations hasn't been 
- * setup. 
- */ 
-
-- (void)setupVacationsArray
-{
-    
-    // NSDocumentDirectory/savedVacations
-    NSURL *url = [self makeVacationsArrayURL]; 
-    
-    if(![[NSFileManager defaultManager] fileExistsAtPath:[url path]])
-    {
-        NSArray *savedVacations = [[NSArray alloc] initWithObjects:@"myVacation", nil]; 
-        [savedVacations writeToURL:url atomically:YES]; 
-        self.vacations = savedVacations; 
-    }
-    else
-    {
-        self.vacations = [[NSArray alloc] initWithContentsOfURL:url]; 
-    }
-    
-}
 
 
 
@@ -84,7 +84,7 @@
     
     if(!self.vacations)
     {
-        [self setupVacationsArray]; 
+        self.vacations = [[NSArray alloc] initWithContentsOfURL:[self makeVacationsArrayURL]];  
     }
 }
 
@@ -96,18 +96,6 @@
 
 
 
-/* helper method to generate the NSDocumentsDirectory URL
- */ 
-
-
-- (NSURL *)makeVacationsArrayURL
-{
-    
-    // NSDocumentDirectory/savedVacations   
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
-    url = [url URLByAppendingPathComponent:@"savedVacations"]; 
-    return url; 
-}
 
 
 

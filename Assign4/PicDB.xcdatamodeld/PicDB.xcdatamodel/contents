@@ -21,7 +21,7 @@
     </entity>
     <elements>
         <element name="Photo" positionX="126" positionY="-90" width="128" height="150"/>
-        <element name="Tag" positionX="-45" positionY="99" width="128" height="90"/>
         <element name="Place" positionX="468" positionY="-126" width="128" height="90"/>
+        <element name="Tag" positionX="-45" positionY="99" width="128" height="90"/>
     </elements>
 </model>

@@ -31,6 +31,7 @@
 		99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB31762313D00D23765 /* PicHunterTop20TVC.m */; };
 		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
 		9969F21B17711D97005D6495 /* PhotosForPlaceTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */; };
+		9969F2231771E269005D6495 /* DisplayPhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F2221771E269005D6495 /* DisplayPhotoVC.m */; };
 		99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B90892176AAA3C0032D870 /* PlaceAnnotation.m */; };
 		99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */; };
 		99E62E1817693C3A00B760D3 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E62E1717693C3A00B760D3 /* MapVC.m */; };
@@ -84,6 +85,8 @@
 		99464BB61762529500D23765 /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
 		9969F21917711D97005D6495 /* PhotosForPlaceTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosForPlaceTVC.h; sourceTree = "<group>"; };
 		9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosForPlaceTVC.m; sourceTree = "<group>"; };
+		9969F2211771E269005D6495 /* DisplayPhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayPhotoVC.h; sourceTree = "<group>"; };
+		9969F2221771E269005D6495 /* DisplayPhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayPhotoVC.m; sourceTree = "<group>"; };
 		99B90891176AAA3C0032D870 /* PlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceAnnotation.h; sourceTree = "<group>"; };
 		99B90892176AAA3C0032D870 /* PlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceAnnotation.m; sourceTree = "<group>"; };
 		99CE616D176617E00090D4EE /* TopPlacePhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacePhotoVC.h; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				99464BAE17622E8E00D23765 /* FlickrAPIKey.h */,
 				99464BAB17622D0700D23765 /* PicHunterTVC.h */,
 				99464BAC17622D0700D23765 /* PicHunterTVC.m */,
+				9969F2211771E269005D6495 /* DisplayPhotoVC.h */,
+				9969F2221771E269005D6495 /* DisplayPhotoVC.m */,
 				99464BB21762313D00D23765 /* PicHunterTop20TVC.h */,
 				99464BB31762313D00D23765 /* PicHunterTop20TVC.m */,
 				99464BB51762529500D23765 /* PlacePhotosTVC.h */,
@@ -289,6 +294,7 @@
 				990D50BB1770AFAE0066F16B /* Photo.m in Sources */,
 				990D50BE1770AFF00066F16B /* Place+Create.m in Sources */,
 				9969F21B17711D97005D6495 /* PhotosForPlaceTVC.m in Sources */,
+				9969F2231771E269005D6495 /* DisplayPhotoVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
