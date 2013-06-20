@@ -14,7 +14,8 @@
 @interface DisplayPhotoVC()
 
 - (void)setupVacationDocument:(UIManagedDocument *)vacation; 
-
+- (void)openDatabase; 
+- (void)setupRightBarButtonItem;
 
 @end
 
@@ -23,15 +24,110 @@
 
 @synthesize vacationDocument = _vacationDocument; 
 
+
+
+
+/*
+- (void)testQuery
+{
+    
+    NSString *uniqueID = self.photoDictionary ? [self.photoDictionary objectForKey:FLICKR_PHOTO_ID] : self.photo.unique; 
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"]; 
+    
+    
+    // this code builds the query/request
+    request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", uniqueID];  
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
+    
+    
+    // this code executes the query/request
+    NSError *error = nil;
+    NSArray *matches = [self.vacationDocument.managedObjectContext executeFetchRequest:request error:&error]; 
+    NSLog(@"DisplayPhotoVC - testQuery matches count = %d", [matches count]); 
+    NSLog(@"DisplayPhotoVC - testQuery - uniqueID = %@", uniqueID); 
+
+}
+*/
+
+
+- (void)setVacationDocument:(UIManagedDocument *)vacationDocument
+{
+    if(_vacationDocument != vacationDocument)
+    {
+        _vacationDocument = vacationDocument;
+    }
+    [self setupRightBarButtonItem]; 
+    [self.view setNeedsDisplay]; 
+    //[self testQuery]; 
+     
+}
+
+
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self openDatabase]; 
+    
+}
+
+
+
+
+
+- (void)openDatabase
+{
+    
+    NSString *currVacation = nil;
+    currVacation = self.vacationName; 
+    if(!currVacation) 
+    {
+        
+        /* currently we have only one vacation so this is a kludge
+         * if self.vacationName hasn't been set then we read the file
+         * at /NSDocumentsDirectory/ListOfVacations which keeps a list
+         * of all the vacations
+         * because we know there's only one vacation we can just take
+         * the vacation at index 0
+         */ 
+        
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
+        url = [url URLByAppendingPathComponent:@"ListOfVacations"];
+        NSArray *vacations = [NSArray arrayWithContentsOfURL:url]; 
+        currVacation = [vacations objectAtIndex:0];
+        //NSLog(@"openDatabase, ListOfVacations = %@", vacations); 
+        //NSLog(@"openDatabase vacationName = %@", currVacation); 
+    }
+    
+    [OpenVacationHelper openVacation:currVacation usingBlock:^(UIManagedDocument *vacationDoc)
+     {   
+         [self setupVacationDocument:vacationDoc];      }]; 
+    
+}
+
+
+
+
+
+
+
+
+
 /*  setupVacationDocument works in conjunction with 
  *  openDatabase to access the sharedManagedDocument
  */ 
 
 - (void)setupVacationDocument:(UIManagedDocument *)vacation
 {
-    NSLog(@"setupVacationDocument"); 
-    self.vacationDocument = vacation;                             
+    //NSLog(@"DisplayPhotoVC - setupVacationDocument"); 
+    self.vacationDocument = vacation;               
 }
+
+
 
 
 
@@ -86,7 +182,7 @@
     UIBarButtonItem *rightBarButton = nil;  
     
     BOOL existsInDatabase = [self photoExistsInDatabase:uniqueID]; 
-    
+        
     if(!existsInDatabase) 
     {
         rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Visit" style:UIBarButtonItemStylePlain target:self action:@selector(addToVacation:)];
@@ -103,38 +199,13 @@
 
 
 
-- (void)openDatabase
-{
-    
-    NSString *currVacation = nil;
-    currVacation = self.vacationName; 
-    if(!currVacation) 
-    {
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
-        url = [url URLByAppendingPathComponent:@"VacationsDirectory"];
-        NSArray *vacations = [NSArray arrayWithContentsOfURL:url]; 
-        NSLog(@"openDatabase, VacationsDirectoy = %@", vacations); 
-        currVacation = [vacations objectAtIndex:0];
-    }
-    
-    [OpenVacationHelper openVacation:currVacation usingBlock:^(UIManagedDocument *vacation)
-        {   [self setupVacationDocument:vacation];      }]; 
-    
-}
 
 
 
 
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    
-    [self openDatabase]; 
-    [self setupRightBarButtonItem]; 
 
-}
 
 
 
@@ -147,6 +218,9 @@
 - (void)addToVacation:(id)sender
 {
     [Photo photoWithFlickrInfo:self.photoDictionary inManagedObjectContext:self.vacationDocument.managedObjectContext]; 
+    [self.vacationDocument saveToURL:self.vacationDocument.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){} ]; 
+    [self setupRightBarButtonItem]; 
+    [self.view setNeedsDisplay]; 
 }
 
 
@@ -155,6 +229,8 @@
 - (void)removeFromVacation:(id)sender
 {
     [Photo deletePhotoWithFlickrInfo:self.photoDictionary inManagedObjectContext:self.vacationDocument.managedObjectContext]; 
+    [self setupRightBarButtonItem]; 
+    [self.view setNeedsDisplay]; 
 }
 
 

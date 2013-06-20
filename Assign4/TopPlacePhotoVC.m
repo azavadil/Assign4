@@ -169,6 +169,14 @@
 }
 
 
+
+
+
+
+
+
+/* fetchImage just calls its helper methods*/ 
+ 
 - (UIImage *)fetchImage
 {
     UIImage *image = nil;
@@ -183,6 +191,11 @@
     }
     return image; 
 }
+
+
+
+
+
 
 
 
@@ -212,7 +225,7 @@
     {
         image = [UIImage imageWithData:
                            [NSData dataWithContentsOfURL:
-                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatOriginal]]];
+                            [FlickrFetcher urlForPhoto:self.photoDictionary format:FlickrPhotoFormatLarge]]];
     }
     return image; 
 }
@@ -297,6 +310,12 @@
 }
 
 
+
+
+
+
+
+
 - (void)viewDidUnload
 {
     [self setImageView:nil];
@@ -308,10 +327,29 @@
     // e.g. self.myOutlet = nil;
 }
 
+
+
+
+
+
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return YES;
+}
+
+
+
+
+
+
+
+
+- (void)debugLogging
+{
+    // implement
 }
 
 @end

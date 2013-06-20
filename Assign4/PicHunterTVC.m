@@ -279,9 +279,10 @@
     
     if(![[NSFileManager defaultManager] fileExistsAtPath:[url path]])
     {
-        NSArray *savedVacations = [[NSArray alloc] initWithObjects:@"myVacation", nil]; 
-        [savedVacations writeToURL:url atomically:YES]; 
+        NSArray *listingOfVacations = [NSArray arrayWithObject:@"myVacation"]; 
+        [listingOfVacations writeToURL:url atomically:YES]; 
     }
+    
 
 }
 

@@ -51,20 +51,20 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"Show Itinerary Option"])
+    if([segue.identifier isEqualToString:@"Show PlaceItinerary Option"])
     {
-        NSLog(@"Prepare for Itinerary Option"); 
+        NSLog(@"Prepare for PlaceItinerary Option"); 
         if([segue.destinationViewController respondsToSelector:@selector(setVacationName:)])
         {
-            [segue.destinationViewController setVacationName:[[sender textLabel] text]]; 
+            [segue.destinationViewController setVacationName:self.vacationName]; 
         }
     }
-    else if ( [segue.identifier isEqualToString:@"Show Tag Option"])
+    else if ( [segue.identifier isEqualToString:@"Show TagItinerary Option"])
     {
-        NSLog(@"Prepare for Tag Option"); 
+        NSLog(@"Prepare for TagItinerary Option"); 
         if([segue.destinationViewController respondsToSelector:@selector(setVacationName:)])
         {
-            [segue.destinationViewController setVacationName:[[sender textLabel] text]]; 
+            [segue.destinationViewController setVacationName:self.vacationName]; 
         }
     }
 }
@@ -74,13 +74,13 @@
 {
     if(indexPath.row == 0) 
     {
-        NSLog(@"Show Itinerary Option"); 
-        [self performSegueWithIdentifier:@"Show Itinerary Option" sender:self]; 
+        NSLog(@"Show PlaceItinerary Option"); 
+        [self performSegueWithIdentifier:@"Show PlaceItinerary Option" sender:self]; 
     }
     else if(indexPath.row == 1)
     {
-        NSLog(@"Show Tag Options"); 
-        [self performSegueWithIdentifier:@"Show Tag Option" sender:self];
+        NSLog(@"Show TagItinerary Options"); 
+        [self performSegueWithIdentifier:@"Show TagItinerary Option" sender:self];
     }
 
 
@@ -125,6 +125,7 @@
     cell.textLabel.text = [self.itineraryOptions objectAtIndex:indexPath.row]; 
     return cell;
 }
+
 
 
 

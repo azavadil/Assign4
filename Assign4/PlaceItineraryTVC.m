@@ -11,18 +11,79 @@
 #import "Place.h"
 
 
+@interface PlaceItineraryTVC()
+
+- (void) openDatabase; 
+
+@end
+
+
 @implementation PlaceItineraryTVC
 
 
 @synthesize vacationName = _vacationName; 
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+
+
+
+
+- (void)testQuery:(UIManagedDocument *)vacationDatabase
 {
-    // Return YES for supported orientations
-    return YES;
+    
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"]; 
+    
+    
+    // this code builds the query/request
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"placeName" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
+    
+    
+    // this code executes the query/request
+    NSError *error = nil;
+    NSArray *matches = [vacationDatabase.managedObjectContext executeFetchRequest:request error:&error]; 
+    Place *place = [matches lastObject]; 
+    NSLog(@"       "); 
+    NSLog(@"TEST QUERY"); 
+    NSLog(@"testQuery - matches count = %d", [matches count]);
+    NSLog(@"testQuery - matches[-1] = %@", place); 
+    NSLog(@"testQuery - matches[-1].placeName = %@", place.placeName); 
+    NSLog(@"testQuery - matches[-1].firstVisited = %@", place.firstVisited); 
+    
 }
 
+
+
+
+
+
+
+
+
+
+- (IBAction)testPressed:(id)sender {
+    NSLog(@"test: self.vacationName = %@", self.vacationName);
+    
+    [OpenVacationHelper openVacation:self.vacationName usingBlock:^(UIManagedDocument *vacDoc){
+                    [self testQuery:vacDoc]; }];  
+    
+}
+
+
+
+
+
+
+
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad]; 
+    [self openDatabase]; 
+}
 
 
 
@@ -37,6 +98,10 @@
      * vacations we would need the predicate
      */ 
     //request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.vacationName]; 
+    
+    
+    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"firstVisited" ascending:YES]]; 
+    
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request 
                                                                         managedObjectContext:vacation.managedObjectContext
                                                                           sectionNameKeyPath:nil 
@@ -68,7 +133,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Itinerary Cell";
+    static NSString *CellIdentifier = @"Itinerary Item Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -105,5 +170,17 @@
     }
 }
 
+
+
+
+
+
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return YES;
+}
 
 @end

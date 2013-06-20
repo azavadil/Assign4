@@ -74,6 +74,7 @@
 /* if we get to viewDidLoad and the self.vacations
  * hasn't been set up, then we need to setup
  * self.vacations 
+ * makeVacationsArrayURL makes URL <NSDocumentsDirector>/ListOfVacations
  */ 
 
 
@@ -139,6 +140,25 @@
     
     return cell;
 }
+
+
+
+
+
+/* Note. We could also use didSelectRowAtIndexPath to identify the vacation and 
+ * trigger a segue. 
+ * The only drawback is the sender is technically the controller
+ * Instead of using self as the sender, we would have to get the selected vacation 
+ * with [self.vacation objectAtIndex.indexPath.row] and send the NSString
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"Show ItineraryTVC" sender:[self.vacations objectAtIndex:indexPath.row]]; 
+}
+*/
+
+
 
 
 @end
