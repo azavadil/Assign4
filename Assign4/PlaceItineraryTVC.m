@@ -14,6 +14,7 @@
 @interface PlaceItineraryTVC()
 
 - (void) openDatabase; 
+- (void)testQuery:(UIManagedDocument *)vacationDatabase; 
 
 @end
 
@@ -29,30 +30,6 @@
 
 
 
-- (void)testQuery:(UIManagedDocument *)vacationDatabase
-{
-    
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"]; 
-    
-    
-    // this code builds the query/request
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"placeName" ascending:YES]; 
-    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
-    
-    
-    // this code executes the query/request
-    NSError *error = nil;
-    NSArray *matches = [vacationDatabase.managedObjectContext executeFetchRequest:request error:&error]; 
-    Place *place = [matches lastObject]; 
-    NSLog(@"       "); 
-    NSLog(@"TEST QUERY"); 
-    NSLog(@"testQuery - matches count = %d", [matches count]);
-    NSLog(@"testQuery - matches[-1] = %@", place); 
-    NSLog(@"testQuery - matches[-1].placeName = %@", place.placeName); 
-    NSLog(@"testQuery - matches[-1].firstVisited = %@", place.firstVisited); 
-    
-}
 
 
 
@@ -182,5 +159,37 @@
     // Return YES for supported orientations
     return YES;
 }
+
+
+
+
+
+
+
+- (void)testQuery:(UIManagedDocument *)vacationDatabase
+{
+    
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"]; 
+    
+    
+    // this code builds the query/request
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"placeName" ascending:YES]; 
+    request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
+    
+    
+    // this code executes the query/request
+    NSError *error = nil;
+    NSArray *matches = [vacationDatabase.managedObjectContext executeFetchRequest:request error:&error]; 
+    Place *place = [matches lastObject]; 
+    NSLog(@"       "); 
+    NSLog(@"TEST QUERY"); 
+    NSLog(@"testQuery - matches count = %d", [matches count]);
+    NSLog(@"testQuery - matches[-1] = %@", place); 
+    NSLog(@"testQuery - matches[-1].placeName = %@", place.placeName); 
+    NSLog(@"testQuery - matches[-1].firstVisited = %@", place.firstVisited); 
+    
+}
+
 
 @end

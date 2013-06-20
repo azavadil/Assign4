@@ -77,6 +77,14 @@
     [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
 }
 
+
+
+
+
+
+
+
+
 - (void) setTopPlaces:(NSArray *)topPlaces
 {
     if (topPlaces != _topPlaces) 

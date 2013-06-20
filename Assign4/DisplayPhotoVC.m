@@ -210,15 +210,19 @@
 
 
 
-/* It should be the case that this is only triggered
+/* The buttons are setup in setupRightBarButtonItem
+ * We set the correct target/action for the button when we initialize the button
+ * It should be the case that this is only triggered
  * when we have self.photoDictionary
  */ 
 
 
 - (void)addToVacation:(id)sender
 {
+    NSLog(@"DisplayPhotoVC - addToVacation - self.photoDictionary = %@", self.photoDictionary); 
     [Photo photoWithFlickrInfo:self.photoDictionary inManagedObjectContext:self.vacationDocument.managedObjectContext]; 
-    [self.vacationDocument saveToURL:self.vacationDocument.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){} ]; 
+    [self.vacationDocument saveToURL:self.vacationDocument.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+        if(success){ NSLog(@"DisplayPhotoVC - addToVacation - NSManagedDocument saved");}} ]; 
     [self setupRightBarButtonItem]; 
     [self.view setNeedsDisplay]; 
 }

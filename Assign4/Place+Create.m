@@ -12,6 +12,7 @@
 
 + (Place *)placeWithName:(NSString *)name inManagedObjectContect:(NSManagedObjectContext *)context; 
 {
+    NSLog(@"Place+Create - name = %@", name); 
     Place *place = nil; 
     
     
@@ -23,32 +24,30 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"]; 
     
     
-    /* this code builds the query/request
-     * Note there's no predicate because we want all places
-     * ugly code. we're relying on the fact that there's only on vacation 
-     */ 
-    
+    request.predicate = [NSPredicate predicateWithFormat:@"placeName = %@", name];   
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"firstVisited" ascending:YES]; 
     request.sortDescriptors = [NSArray arrayWithObject:sortDescriptor]; 
     
     
     // this code executes the query/request
     NSError *error = nil;
-    NSArray *places = [context executeFetchRequest:request error:&error]; 
+    NSArray *matches = [context executeFetchRequest:request error:&error]; 
     
-    if(!places || [places count] > 1) 
+    if(!matches || [matches count] > 1) 
     {
         // handle error
     }
-    else if([places count] == 0)
+    else if([matches count] == 0)
     {
+        NSLog(@"Place+Create - placeWithName - count = 0 conditional"); 
         place = [NSEntityDescription insertNewObjectForEntityForName:@"Place" inManagedObjectContext:context]; 
         place.placeName  = name; 
         place.firstVisited = [NSDate date]; 
     }
-    else if([places count] == 1)
+    else if([matches count] == 1)
     {
-        place = [places lastObject]; 
+        NSLog(@"Place+Create - placeWithName - count = 1 conditional"); 
+        place = [matches lastObject]; 
     }
     return place; 
 
