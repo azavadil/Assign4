@@ -30,6 +30,7 @@
 		99464BAD17622D0700D23765 /* PicHunterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BAC17622D0700D23765 /* PicHunterTVC.m */; };
 		99464BB41762313D00D23765 /* PicHunterTop20TVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB31762313D00D23765 /* PicHunterTop20TVC.m */; };
 		99464BB71762529500D23765 /* PlacePhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99464BB61762529500D23765 /* PlacePhotosTVC.m */; };
+		99535D411773650E007157F9 /* Tag+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 99535D401773650D007157F9 /* Tag+Create.m */; };
 		9969F21B17711D97005D6495 /* PhotosForPlaceTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */; };
 		9969F2231771E269005D6495 /* DisplayPhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F2221771E269005D6495 /* DisplayPhotoVC.m */; };
 		99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B90892176AAA3C0032D870 /* PlaceAnnotation.m */; };
@@ -83,6 +84,8 @@
 		99464BB31762313D00D23765 /* PicHunterTop20TVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicHunterTop20TVC.m; sourceTree = "<group>"; };
 		99464BB51762529500D23765 /* PlacePhotosTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePhotosTVC.h; sourceTree = "<group>"; };
 		99464BB61762529500D23765 /* PlacePhotosTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePhotosTVC.m; sourceTree = "<group>"; };
+		99535D3F1773650D007157F9 /* Tag+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tag+Create.h"; sourceTree = "<group>"; };
+		99535D401773650D007157F9 /* Tag+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Tag+Create.m"; sourceTree = "<group>"; };
 		9969F21917711D97005D6495 /* PhotosForPlaceTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosForPlaceTVC.h; sourceTree = "<group>"; };
 		9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosForPlaceTVC.m; sourceTree = "<group>"; };
 		9969F2211771E269005D6495 /* DisplayPhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayPhotoVC.h; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				990D509617709CA90066F16B /* Photo+CreatePhotoWithFlickrData.m */,
 				990D50BC1770AFF00066F16B /* Place+Create.h */,
 				990D50BD1770AFF00066F16B /* Place+Create.m */,
+				99535D3F1773650D007157F9 /* Tag+Create.h */,
+				99535D401773650D007157F9 /* Tag+Create.m */,
 				990D507517708A380066F16B /* CoreDataTableViewController.m */,
 				990D507617708A380066F16B /* CoreDataTableViewController.h */,
 				990D505A176F89540066F16B /* OpenVacationHelper.h */,
@@ -295,6 +300,7 @@
 				990D50BE1770AFF00066F16B /* Place+Create.m in Sources */,
 				9969F21B17711D97005D6495 /* PhotosForPlaceTVC.m in Sources */,
 				9969F2231771E269005D6495 /* DisplayPhotoVC.m in Sources */,
+				99535D411773650E007157F9 /* Tag+Create.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

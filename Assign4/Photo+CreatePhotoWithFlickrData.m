@@ -9,6 +9,7 @@
 #import "Photo+CreatePhotoWithFlickrData.h"
 #import "FlickrFetcher.h"
 #import "Place+Create.h"
+#import "Tag+Create.h"
 
 @implementation Photo (CreatePhotoWithFlickrData)
 
@@ -49,9 +50,18 @@
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString]; 
         photo.fromPlace = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContect:context];
         
-        //NSArray *tags = [[flickrInfo objectForKey:FLICKR_TAGS]
-        //NSString
+        if(![[flickrInfo objectForKey:FLICKR_TAGS] isEqualToString:@""])
+        {
+            NSArray *tags = [[flickrInfo objectForKey:FLICKR_TAGS] componentsSeparatedByString:@""]; 
+            for(NSString *tag in tags)
+            {
+                if(![tag isEqualToString:@""])
+                {
+                    [Tag tagWithName:tag inManagedObjectContect:context]; 
+                }
+            }
         
+        }
         
         
     }
