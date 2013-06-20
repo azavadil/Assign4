@@ -122,7 +122,7 @@
 
 
 
-- (void)cachePhoto:(NSDictionary *)photoData imageToCache:(UIImage *)image
+- (void)cachePhoto:(NSString *)uniqueID imageToCache:(UIImage *)image
 {
     
     if(!image) return; 
@@ -153,14 +153,14 @@
     }
         
     // check that the image isn't already in the cache
-    id obj = [cachedImages objectForKey:[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+    id obj = [cachedImages objectForKey:uniqueID]; 
     if(!obj)
     {
     
-        [chronology addObject:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]]; 
+        [chronology addObject:uniqueID]; 
         [cachedImages setObject:chronology forKey:@"chronology"]; 
         NSData *pngImage = UIImagePNGRepresentation(image); 
-        [cachedImages setObject:pngImage forKey:(NSString*)[photoData valueForKey:FLICKR_PHOTO_ID]];
+        [cachedImages setObject:pngImage forKey:uniqueID];
 
         [cachedImages writeToURL:filePath atomically:YES]; 
     }
@@ -301,7 +301,14 @@
             
             self.title = [self.photoDictionary objectForKey:FLICKR_PHOTO_TITLE];
         }); 
-        [self cachePhoto:self.photoDictionary imageToCache:currImage]; 
+        if(self.photoDictionary)
+        {
+            [self cachePhoto:[self.photoDictionary objectForKey:FLICKR_PHOTO_ID] imageToCache:currImage];
+        }
+        else if(self.photo)
+        {
+            [self cachePhoto:self.photo.unique imageToCache:currImage];
+        }
         
     }); 
     

@@ -48,7 +48,11 @@
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString]; 
         photo.fromPlace = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContect:context];
-        NSLog(@"Photo+CreatePhoto - createPhoto - FLICKR_PHOTO_PLACE_NAME = %@", [flickrInfo valueForKey:FLICKR_PHOTO_PLACE_NAME]); 
+        
+        //NSArray *tags = [[flickrInfo objectForKey:FLICKR_TAGS]
+        //NSString
+        
+        
         
     }
     else if([matches count] == 1)

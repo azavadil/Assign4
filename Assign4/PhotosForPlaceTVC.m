@@ -10,6 +10,15 @@
 #import "OpenVacationHelper.h"
 #import "Photo.h"
 
+@interface PhotosForPlaceTVC()
+
+- (void) setupFetchedResultsController:(UIManagedDocument *)vacation; 
+- (void) openDatabase; 
+
+@end
+
+
+
 
 @implementation PhotosForPlaceTVC
 
@@ -22,10 +31,22 @@
 
 
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad]; 
+    [self openDatabase]; 
+}
+
+
+
+
+
+
+
 - (void) setupFetchedResultsController:(UIManagedDocument *)vacation
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photos"]; 
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.place.placeName]; 
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"]; 
+    request.predicate = [NSPredicate predicateWithFormat:@"fromPlace.placeName = %@", self.place.placeName]; 
     request.sortDescriptors = [NSArray arrayWithObject:
                                [NSSortDescriptor sortDescriptorWithKey:@"fromPlace.firstVisited" ascending:YES]]; 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request 
@@ -62,7 +83,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"PhotoForPlace Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -70,6 +91,9 @@
     }
     
     // Configure the cell...
+    Photo *photo = [self.fetchedResultsController objectAtIndexPath:indexPath]; 
+    cell.textLabel.text = photo.title; 
+    cell.detailTextLabel.text = photo.subtitle; 
     
     return cell;
 }

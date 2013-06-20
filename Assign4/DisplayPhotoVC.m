@@ -72,6 +72,7 @@
     [super viewDidLoad];
     
     [self openDatabase]; 
+    NSLog(@"DisplayPhotoVC - dictionary = %@", self.photoDictionary); 
     
 }
 
@@ -233,6 +234,8 @@
 - (void)removeFromVacation:(id)sender
 {
     [Photo deletePhotoWithFlickrInfo:self.photoDictionary inManagedObjectContext:self.vacationDocument.managedObjectContext]; 
+    [self.vacationDocument saveToURL:self.vacationDocument.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success){
+        if(success){ NSLog(@"DisplayPhotoVC - removeFromVacation - NSManagedDocument saved");}} ];
     [self setupRightBarButtonItem]; 
     [self.view setNeedsDisplay]; 
 }
