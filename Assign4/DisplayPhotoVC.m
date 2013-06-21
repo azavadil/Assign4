@@ -71,6 +71,7 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"DisplayPhotoVC - viewDidLoad");
     [self openDatabase]; 
     NSLog(@"DisplayPhotoVC - dictionary = %@", self.photoDictionary); 
     

@@ -50,12 +50,15 @@
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString]; 
         photo.fromPlace = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContect:context];
         
-        if(![[flickrInfo objectForKey:FLICKR_TAGS] isEqualToString:@""])
+        
+        NSString *photoTags = [flickrInfo objectForKey:FLICKR_TAGS]; 
+        
+        if(![photoTags isEqualToString:@""])
         {
-            NSArray *tags = [[flickrInfo objectForKey:FLICKR_TAGS] componentsSeparatedByString:@""]; 
+            NSArray *tags = [photoTags componentsSeparatedByString:@" "]; 
             for(NSString *tag in tags)
             {
-                if(![tag isEqualToString:@""])
+                if(![tag isEqualToString:@""] && ([tag rangeOfString:@":"].location == NSNotFound))
                 {
                     [Tag tagWithName:tag inManagedObjectContect:context]; 
                 }

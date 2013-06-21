@@ -266,6 +266,7 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"TopPlacePhotoVC - viewDidLoad"); 
 
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
     [spinner startAnimating]; 
