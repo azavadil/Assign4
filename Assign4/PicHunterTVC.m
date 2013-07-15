@@ -25,10 +25,11 @@
 
 
 
-
-
-
-
+/** 
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * self-documenting implementation
+ */
 
 - (void)viewDidLoad
 {
@@ -38,12 +39,13 @@
 
 
 
-
-
-
-
-
-
+/** 
+ * Instance method: refresh
+ * ------------------------
+ * refresh is the target for the action of refresh button being pressed on the home
+ * screen of the picHunter app. Refresh queries Flickr for the topPlaces and 
+ * displays them in a tableViewController
+ */ 
 
 - (IBAction)refresh:(id)sender {
     
@@ -66,11 +68,13 @@
 
 
 
-
-
-
-
-
+/**
+ * Instance method: showMap
+ * ------------------------
+ * showMap is the target for the action of the 'map' button being pressed on the 
+ * home screen of the picHunter app. showMap calls for the segue 
+ * "Show topPlaces Map" to be peformed
+ */ 
 
 - (IBAction)showMap:(id)sender {
     
@@ -79,14 +83,16 @@
 
 
 
-
-
-
-
-
+/**
+ * Instance method: setTopPlaces
+ * -----------------------------
+ * setTopPlaces is the setter for the _topPlaces instance variable. 
+ * We require the table to reload each time that topPlaces is set
+ */
 
 - (void) setTopPlaces:(NSArray *)topPlaces
 {
+    // defensive: validate that topPlaces has changed before setting
     if (topPlaces != _topPlaces) 
     {
         _topPlaces = topPlaces; 
@@ -96,10 +102,13 @@
 
 
 
-
-
-
-
+/**
+ * Instance method: prepareForSegue
+ * --------------------------------
+ * prepareForSegue 
+ *
+ *
+ */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -138,12 +147,14 @@
 
 
 
-
-
-
-
-
-
+/** 
+ * Instance method: mapAnnotations
+ * -------------------------------
+ * mapAnnotations returns an NSArray of mapAnnotations. When we segue to a map displaying
+ * all of the places, we set the annotations of the successor view controller to the
+ * annotations returned by mapAnnotations. 
+ */
+ 
 - (NSArray *)mapAnnotations
 {
     
@@ -231,12 +242,6 @@
 
 
 
-
-
-
-
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -251,12 +256,10 @@
 
 
 
-
-
-
-
-/* helper method to generate the NSDocumentsDirectory URL
- * path is /NSDocumentDirectory/ListOfVacations
+/** 
+ * Instance method: makeVacationsArrayURL
+ * makeVacationsArrayURL is a helper method to generate the NSDocumentsDirectory URL.
+ * the path we create is /NSDocumentDirectory/ListOfVacations
  */ 
 
 - (NSURL *)makeVacationsArrayURL
@@ -270,11 +273,10 @@
 
 
 
-
-
-
-
-/* setupVacationsArray is called if we reach 
+/**
+ * Instance method: setupVacationsArray 
+ * ------------------------------------
+ * setupVacationsArray is called if we reach 
  * viewDidLoad and self.vacations hasn't been 
  * setup. 
  */ 
@@ -290,7 +292,6 @@
         NSArray *listingOfVacations = [NSArray arrayWithObject:@"myVacation"]; 
         [listingOfVacations writeToURL:url atomically:YES]; 
     }
-    
 
 }
 

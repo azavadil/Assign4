@@ -8,6 +8,15 @@
 
 #import "Place.h"
 
+/**
+ * Implementation note: 
+ * --------------------
+ * We add a category to the Place. The category has a single method for 
+ * creating a photo. We implement the category to maintain clear deliniation
+ * of objects (i.e. objects are responsible for creating and deleting themselves). 
+ */ 
+
+
 @interface Place (Create)
 
 + (Place *)placeWithName:(NSString *)name inManagedObjectContect:(NSManagedObjectContext *)context;

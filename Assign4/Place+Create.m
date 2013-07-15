@@ -10,6 +10,15 @@
 
 @implementation Place (Create)
 
+
+/**
+ * Class method: placeWithName
+ * ----------------------------
+ * placeWithName takes a string and a NSManagedObjectContext. placeWithName validates
+ * that an object doesn't already exist in the database, if the object doesn't exist
+ * adds the object to the database, and returns the object to the client
+ */
+
 + (Place *)placeWithName:(NSString *)name inManagedObjectContect:(NSManagedObjectContext *)context; 
 {
     NSLog(@"Place+Create - name = %@", name); 

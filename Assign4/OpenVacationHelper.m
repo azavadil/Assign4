@@ -10,6 +10,13 @@
 
 @implementation OpenVacationHelper
 
+/**
+ * Class method: openVacation
+ * --------------------------
+ * openVacation opens or creates the UIManagedDocument before handing
+ * the document back to the caller. 
+ */
+
 + (void)openVacation:(NSString *)vacationName usingBlock:(completion_block_t)completionBlock
 {
     NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 

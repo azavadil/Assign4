@@ -9,6 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+/**
+ * Implementation note: 
+ * --------------------
+ * Tag is a core data object and is used to represent a tag
+ */ 
+
+
+
 @class Photo;
 
 @interface Tag : NSManagedObject

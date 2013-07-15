@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+/**
+ * Implementation note: 
+ * --------------------
+ * Place is a core data object and is used to represent a place
+ */ 
+
+
 @class Photo;
 
 @interface Place : NSManagedObject
