@@ -20,14 +20,15 @@
 @interface MapVC : UIViewController
 
 
-/* annonation will just be passed right on to mapView
- * since I don't make the mapView public
- * I need to have public API so the annotations can 
- * be set
- */ 
-
-/* when do the annotations need to be updated? 
- * when we hit refresh
+/**
+ * Implementation notes
+ * --------------------
+ * convention is to always set the model for a controller. In this case the 
+ * model for the controller is the annonations. 
+ *
+ * The controller will just pass the annotations on to the mapView. 
+ * However, since the mapView will not be public, there needs to be 
+ * to a public API in the controller so the annotations can be set.
  */ 
 
 @property (nonatomic, strong) NSArray *annotations; 

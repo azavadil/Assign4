@@ -35,6 +35,7 @@
 		99535D4B177377B3007157F9 /* TagItineraryPhotosTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99535D4A177377B3007157F9 /* TagItineraryPhotosTVC.m */; };
 		9969F21B17711D97005D6495 /* PhotosForPlaceTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */; };
 		9969F2231771E269005D6495 /* DisplayPhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9969F2221771E269005D6495 /* DisplayPhotoVC.m */; };
+		9995C5C01794939D002CADC1 /* ImplementationNote in Resources */ = {isa = PBXBuildFile; fileRef = 9995C5BF1794939D002CADC1 /* ImplementationNote */; };
 		99B90893176AAA3C0032D870 /* PlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 99B90892176AAA3C0032D870 /* PlaceAnnotation.m */; };
 		99CE616F176617E00090D4EE /* TopPlacePhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CE616E176617E00090D4EE /* TopPlacePhotoVC.m */; };
 		99E62E1817693C3A00B760D3 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E62E1717693C3A00B760D3 /* MapVC.m */; };
@@ -96,6 +97,7 @@
 		9969F21A17711D97005D6495 /* PhotosForPlaceTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosForPlaceTVC.m; sourceTree = "<group>"; };
 		9969F2211771E269005D6495 /* DisplayPhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayPhotoVC.h; sourceTree = "<group>"; };
 		9969F2221771E269005D6495 /* DisplayPhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayPhotoVC.m; sourceTree = "<group>"; };
+		9995C5BF1794939D002CADC1 /* ImplementationNote */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ImplementationNote; sourceTree = "<group>"; };
 		99B90891176AAA3C0032D870 /* PlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceAnnotation.h; sourceTree = "<group>"; };
 		99B90892176AAA3C0032D870 /* PlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceAnnotation.m; sourceTree = "<group>"; };
 		99CE616D176617E00090D4EE /* TopPlacePhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacePhotoVC.h; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				99464BAC17622D0700D23765 /* PicHunterTVC.m */,
 				9969F2211771E269005D6495 /* DisplayPhotoVC.h */,
 				9969F2221771E269005D6495 /* DisplayPhotoVC.m */,
+				9995C5BF1794939D002CADC1 /* ImplementationNote */,
 				99464BB21762313D00D23765 /* PicHunterTop20TVC.h */,
 				99464BB31762313D00D23765 /* PicHunterTop20TVC.m */,
 				99464BB51762529500D23765 /* PlacePhotosTVC.h */,
@@ -277,6 +280,7 @@
 			files = (
 				99464B9917622C4E00D23765 /* InfoPlist.strings in Resources */,
 				99464BA217622C4E00D23765 /* MainStoryboard.storyboard in Resources */,
+				9995C5C01794939D002CADC1 /* ImplementationNote in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

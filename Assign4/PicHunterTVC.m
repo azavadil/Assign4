@@ -105,15 +105,19 @@
 /**
  * Instance method: prepareForSegue
  * --------------------------------
- * prepareForSegue 
- *
- *
+ * prepareForSegue prepares for the specified segue
  */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    /**
+     * Implementation note:
+     * --------------------
+     * we have the picHunterTVC set the 'map' button on the successor view. As part of the implementation 
+     * we set the selector for the 'map' button to showMap with is one of the PlacePhotosTVC's instance methods
+     */
+    
     if([segue.identifier isEqualToString:@"Show List of Photos"])
-        
     {
         
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]; 
@@ -137,7 +141,11 @@
         dispatch_release(download_queue); 
         
     }
-    
+    /**
+     * Implementation note:
+     * --------------------
+     * we use the method mapAnnotations to set the mapAnnotations on the successor view controller. 
+     */
     if([segue.identifier isEqualToString:@"Show topPlaces Map"])
     {
         NSLog(@"preparing for map = %d", [[self mapAnnotations] count]); 
@@ -168,11 +176,12 @@
 
 
 
-
-
-
-
-
+/** 
+ * Instance method: shouldAutorotateToInterfaceOrientation
+ * -------------------------------------------------------
+ * shouldAutorotateToInterfaceOrientation returns YES for the orientations we 
+ * want to rotate to
+ */
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -180,19 +189,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-
-
 #pragma mark - Table view data source
-
-
-
-
-
-
-
-
-
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -204,11 +201,15 @@
 
 
 
-
-
-
-
-
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * tableView-cellForRowAtIndexPath allocates and initializes the cells for the 
+ * PicHunterTVC. 
+ * 
+ * For the PicHunterTVC the main heading is the city and the subheading
+ * is the state, country
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -223,6 +224,7 @@
     NSDictionary *topPlacesEntry = [self.topPlaces objectAtIndex:indexPath.row]; 
     NSString *placeName = [topPlacesEntry objectForKey:FLICKR_PLACE_NAME]; 
         
+    // parse the data from Flickr. The data is comma delimited.
     NSMutableArray *tokens = [[placeName componentsSeparatedByString:@","] mutableCopy]; 
     cell.textLabel.text = [tokens objectAtIndex:0];
     NSRange range = NSMakeRange(1, [tokens count] -1 );
@@ -234,7 +236,6 @@
 
     return cell;
 }
-
 
 
 

@@ -27,7 +27,12 @@
 
 
 
-/*
+/**
+ * Instance method: testQuery 
+ * --------------------------
+ * deprecated: used for early debugging
+ */
+
 - (void)testQuery
 {
     
@@ -48,8 +53,15 @@
     NSLog(@"DisplayPhotoVC - testQuery - uniqueID = %@", uniqueID); 
 
 }
-*/
 
+
+
+
+/** 
+ * Instance method: setVacationDocument
+ * ------------------------------------ 
+ * setVacationDocument is the setter for the vacation document (i.e. the coreData document)
+ */
 
 - (void)setVacationDocument:(UIManagedDocument *)vacationDocument
 {
@@ -59,13 +71,18 @@
     }
     [self setupRightBarButtonItem]; 
     [self.view setNeedsDisplay]; 
-    //[self testQuery]; 
      
 }
 
 
 
-
+/**
+ * Instance method: viewDidLoad
+ * ---------------------------- 
+ * viewDidLoad calls openDatabase. This ensures that whenever the view is opened the
+ * _vacationDocument instance variable is also set (via the call to 
+ * setVacationDocument in openDatabase. 
+ */
 
 - (void)viewDidLoad
 {
@@ -79,7 +96,11 @@
 
 
 
-
+/**
+ * Instance method: openDatabase
+ * -----------------------------
+ * openDatabase uses the OpenVacationHelper to open the UIManagedDocument
+ */
 
 - (void)openDatabase
 {
@@ -89,12 +110,10 @@
     if(!currVacation) 
     {
         
-        /* currently we have only one vacation so this is a kludge
-         * if self.vacationName hasn't been set then we read the file
-         * at /NSDocumentsDirectory/ListOfVacations which keeps a list
-         * of all the vacations
-         * because we know there's only one vacation we can just take
-         * the vacation at index 0
+        /* currently we have only one vacation so this is a kludge if self.vacationName 
+         * hasn't been set then we read the file at /NSDocumentsDirectory/ListOfVacations 
+         * which keeps a list of all the vacations. Because we know there's only one vacation 
+         * we can just take the vacation at index 0
          */ 
         
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]; 
@@ -107,20 +126,17 @@
     
     [OpenVacationHelper openVacation:currVacation usingBlock:^(UIManagedDocument *vacationDoc)
      {   
-         [self setupVacationDocument:vacationDoc];      }]; 
+         [self setupVacationDocument:vacationDoc];  }]; 
     
 }
 
 
 
-
-
-
-
-
-
-/*  setupVacationDocument works in conjunction with 
- *  openDatabase to access the sharedManagedDocument
+/**
+ * Instance method: setupVacationDocument
+ * --------------------------------------
+ * setupVacationDocument works in conjunction with 
+ * openDatabase to access the sharedManagedDocument
  */ 
 
 - (void)setupVacationDocument:(UIManagedDocument *)vacation
@@ -131,10 +147,12 @@
 
 
 
-
-
-
-
+/**
+ * Instance method: photoExistsInDatabase
+ * --------------------------------------
+ * photoExistsInData takes an NSSstring representing a unique identifier and returns 
+ * YES if the that unique identifier is found in the database and false otherwise 
+ */
 
 - (BOOL)photoExistsInDatabase:(NSString *)uniqueID 
 {
@@ -173,8 +191,13 @@
 
 
 
-
-
+/** 
+ * Instance method: setupRightBarButtonItem
+ * ------------------------------
+ * setupRightBarButtonItem sets the rightBarButton when a photo is viewed. The rightBarButton
+ * can either say "visit" and trigger the method addToVaction or it can say "unvisit" 
+ * and trigger the method removeFromVacation.
+ */ 
 
 
 - (void)setupRightBarButtonItem
@@ -185,6 +208,13 @@
     
     BOOL existsInDatabase = [self photoExistsInDatabase:uniqueID]; 
         
+    
+    /** 
+     * Implementation note: 
+     * --------------------
+     * if the photo isn't in the database then user has the option of visiting the photo which.
+     * The title of the button is set to "Visit" and the action is set to method addToVacation
+     */
     if(!existsInDatabase) 
     {
         rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Visit" style:UIBarButtonItemStylePlain target:self action:@selector(addToVacation:)];
@@ -198,26 +228,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* The buttons are setup in setupRightBarButtonItem
- * We set the correct target/action for the button when we initialize the button
- * It should be the case that this is only triggered
- * when we have self.photoDictionary
+/** 
+ * Instance method: addToVacation
+ * ------------------------------
+ * addToVacation is the target for the action of a rightBarButton that's set to "visit" being pressed. The 
+ * button can either be "visit" or "unvisit" so we can't hardwire the button to 
+ * the addToVacation or removeFromVacation methods. Instead, we implement the functionality 
+ * the setupRightBarButtonItem method. The action for the button is set as either 
+ * addToVacation or removeFromVacation depending on whether the photo is already in the 
+ * vaction. 
+ *
+ * It should be the case that this is only triggered when we have self.photoDictionary
  */ 
-
 
 - (void)addToVacation:(id)sender
 {
@@ -231,6 +253,18 @@
 
 
 
+/** 
+ * Instance method: removeFromVacation
+ * ------------------------------
+ * removeFromVacation is the target for the action of a rightBarButton that's set to "unvisit" 
+ * being pressed. The button can either be "visit" or "unvisit" so we can't hardwire the button to 
+ * the addToVacation or removeFromVacation methods. Instead, we implement the functionality 
+ * the setupRightBarButtonItem method. The action for the button is set as either 
+ * addToVacation or removeFromVacation depending on whether the photo is already in the 
+ * vaction. 
+ *
+ * It should be the case that this is only triggered when we have self.photoDictionary
+ */ 
 
 - (void)removeFromVacation:(id)sender
 {

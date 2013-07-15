@@ -9,8 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h> 
 
-/* This is part of the ViewController
- * bridge between model and mapView
+/** 
+ * Implementation note: 
+ * --------------------
+ * The PhotoAnnotation is part of the controller. The PhotoAnnotation is like a bridge 
+ * between the model and mapView. Provides a way to tranlate the model in a way the view
+ * wants to understand the model. 
+ * 
  * Model = NSArray of annotations
  * View = mapView
  */ 

@@ -13,6 +13,16 @@
 
 @synthesize photo = _photo; 
 
+
+
+
+/**
+ * Class method: annotationForPhoto
+ * --------------------------------
+ * annotationForPhoto takes an NSDictionary of photo data and returns a 
+ * a PhotoAnnotation. 
+ */
+
 + (PhotoAnnotation *)annotationForPhoto:(NSDictionary *)photo
 {
     PhotoAnnotation *annotation = [[PhotoAnnotation alloc] init]; 
@@ -21,21 +31,42 @@
 }
 
 
-/* MKAnnotation methods
- * title
- * subtitle
- * coordinate
+
+/* MKAnnotation methods: title, subtitle, coordinate */ 
+
+
+
+/**
+ * Instance method: title
+ * ----------------------
+ * title returns the title of a photo
  */ 
 
 - (NSString *)title
 {
     return [self.photo objectForKey:FLICKR_PHOTO_TITLE]; 
 }
- 
+
+
+
+/**
+ * Instance method: subtitle
+ * ----------------------
+ * subtitle returns the description of a photo
+ */ 
+
 - (NSString *)subtitle
 {
     return [self.photo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION]; 
 }
+
+
+
+/**
+ * Instance method: coordinate
+ * ----------------------
+ * coordinate returns the coordinate of a photo
+ */ 
 
 - (CLLocationCoordinate2D)coordinate
 {

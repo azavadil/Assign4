@@ -24,8 +24,18 @@
 @synthesize delegate = _delegate; 
 
 
-/* setMapView, setAnnoations, updateMapView
- * keep the mapView and annotations in sync
+/**
+ * Instance method: sychronizeMapView
+ * ----------------------------------
+ * setMapView, setAnnoations, updateMapView
+ * sychronizeMapView is a convience method so to help keep our view and out model 
+ * in sync. Whenever our view and our model are setable, we want to make sure that
+ * they are always in synch. We implement that in the setters of both the view and the 
+ * model.
+ * 
+ * This way it doens't matter which order the outlets and the model gets set. 
+ *
+ * see implementation notes. 
  */ 
 
 -(void)sychronizeMapView

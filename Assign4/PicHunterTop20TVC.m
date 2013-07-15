@@ -20,6 +20,7 @@
 
 @synthesize photoDictionaries = _photoDictionaries; 
 
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -41,12 +42,22 @@
 
 #pragma mark - View lifecycle
 
+
+
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * viewDidLoad ensures that the photoDictionary is set whenever the view loads 
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     self.photoDictionaries = [[NSUserDefaults standardUserDefaults] objectForKey:MOST_RECENT]; 
 }
+
+
 
 - (void)viewDidUnload
 {
@@ -84,11 +95,32 @@
 #pragma mark - Table view data source
 
 
+
+/**
+ * Instance method: tableView-numberOfRowsInSection
+ * ------------------------------------------------
+ * tableView-numberOfRowsInSection returns the number of rows in a section. In this
+ * case its easy: the number of entries in the photoDictionaries
+ */
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     return [self.photoDictionaries count]; 
 }
+
+
+
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * tableView-cellForRowAtIndexPath allocates and initializes the cells for the 
+ * PicHunterTop20TVC. 
+ * 
+ * For the PicHunterTop20TVC the main heading is the photo title and the subheading
+ * is the photo description. If the photo doesn't have a title we set the main
+ * heading to be "Unknown". 
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -128,6 +160,15 @@
 
 /* CODE FOR SHOWING MAP */ 
 
+
+
+/** 
+ * Instance method: mapAnnotations
+ * -------------------------------
+ * mapAnnotations returns an NSArray of mapAnnotations. When we segue to a map displaying
+ * all the photos on map, we set the annotations of the successor view controller to the
+ * annotations returned by mapAnnotations. 
+ */
 
 - (NSArray *)mapAnnotations
 {
