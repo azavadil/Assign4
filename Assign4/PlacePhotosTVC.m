@@ -34,6 +34,14 @@
 
 
 
+/** 
+ * Instance method: mapAnnotations
+ * -------------------------------
+ * mapAnnotations returns an NSArray of mapAnnotations. When we segue to a map displaying
+ * all of the places, we set the annotations of the successor view controller to the
+ * annotations returned by mapAnnotations. 
+ */
+
 - (NSArray *)mapAnnotations
 {
     
@@ -121,12 +129,23 @@
     }
 }
 
+
+
+/**
+ * Instance method: provideImageToMapVC 
+ * ------------------------------------
+ * PlacePhotosTVC is the datasource for a mapView controller (i.e. PlacePhotosTVC gets images
+ * from Flickr on the mapView controllers behalf). provideImageToMapVC gets an image on behalf
+ * of the mapView (the mapView subsequently passes the image to an annotation
+ */
+ 
 -(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id<MKAnnotation>)annotation
 {
     PhotoAnnotation *photoAnnotation = (PhotoAnnotation *)annotation;
     NSURL *url = [FlickrFetcher urlForPhoto:photoAnnotation.photo format:FlickrPhotoFormatSquare]; 
     NSData *data = [NSData dataWithContentsOfURL:url]; 
-    return data ? [UIImage imageWithData:data] : nil; 
+    return data ? [UIImage imageWithData:data] : nil; ; 
+    
 }
 
 - (IBAction)showMap:(id)sender

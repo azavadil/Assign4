@@ -39,12 +39,15 @@
 
 
 
-/* required if we want zooming to work 
- * all we have to do is return which subview we want to zoom
- * in this case (and most cases) you only have 1 subview so 
- * this is trivial
+/** 
+ * Instance method: viewForZoomingInScrollView
+ * -------------------------------------------
+ * viewForZoomingInScrollView specifies the view that we want zoom-in/zoom-out to apply to 
+ * viewForZoomingInScrollView is required if we want zooming to work. We simply return 
+ * the subview we want to zoom. 
+ * 
+ * In this case (and most cases) you only have 1 subview so this is trivial
  */ 
-
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView   
 {
@@ -53,8 +56,13 @@
 
 
 
-
-
+/** 
+ * Instance method: sizeOfCacheContainer
+ * -------------------------------------
+ * deprecated. Returns the size of the container but on the cumulative size of the elements
+ * 
+ * sizeOfCacheContainer returns the size of the container at the specified file path 
+ */ 
 
 -(unsigned long long)sizeOfCacheContainer
 {
@@ -68,8 +76,12 @@
 
 
 
-
-
+/**
+ * Instance method: getSizeOfCache
+ * -------------------------------
+ * getSizeOfCache returns the size of the photos we have caches (we cache recent photos 
+ * instead of constantly hitting Flickr). 
+ */ 
 
 - (int)getSizeOfCache
 {

@@ -1,7 +1,7 @@
 /**
  * Implementation note: synchronizeMapView
  * ----------------------------------------------------------
- * Basics: we have a controller whose model is annotations
+ * FundamentalsS: we have a controller whose model is annotations
  *               the view also has an instance variable annotations
  *      
  * We want to keep the controller annotations and the view annotations in sync. In order to implement 

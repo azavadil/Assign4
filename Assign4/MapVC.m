@@ -44,17 +44,37 @@
     if(self.annotations) [self.mapView addAnnotations:self.annotations]; 
 }
 
+
+
+/**
+ * Instance method: setMapView
+ * ---------------------------
+ * setMapView calls synchronizeMapView to set the annotations
+ * this keeps the controller annotations and the view annotations synchronized
+ */
+
 -(void)setMapView:(MKMapView *)mapView
 {
     _mapView = mapView; 
     [self sychronizeMapView]; 
 }
 
+
+
+/**
+ * Instance method: setAnnotations
+ * ---------------------------
+ * setAnnotations calls synchronizeMapView to set the annotations
+ * this keeps the controller annotations and the view annotations synchronized
+ */
+
 -(void)setAnnotations:(NSArray *)annotations
 {
     _annotations = annotations; 
     [self sychronizeMapView]; 
 }
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -75,8 +95,20 @@
 
 #pragma mark - View lifecycle
 
-/* establish mapView delegate EMD1
- * EMD1
+/**
+ * Implementation note: establish a mapView delegate EMD1
+ */
+
+
+
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * viewDidLoad sets the controller as the mapView's delegate (MKMapView has 
+ * a built-in delegate method MKMapViewDelegate) and calls sychronizeMapView 
+ * to ensure the controller annotations and the view annotations are sychronized.
+ * 
+ * All the methods in MKMapViewDelegate are optional
  */
 
 -(void)viewDidLoad
@@ -88,15 +120,16 @@
     [self sychronizeMapView]; 
 }
 
-/* EMD3. most important method
- * like cellForRowAtIndexPath
- * MKMapView has a built-in delegate method MKMapViewDelegate
- * We're going to establish the MapVC as the delegate for the mapView
- * mapView's main delegate method to get us a view for a selected annotation
- * similar to the button dance
- * note that we don't download the image in this method 
- * this method is only for creating the generic pin. we don't download the image
- * until the pin is actually selected 
+/**
+ * Instance method: mapView-viewForAnnotation
+ * ------------------------------------------
+ * most important method for providing data to the annotation. 
+ * mapView-viewForAnnotation is like cellForRowAtIndexPath. mapView-viewForAnnotation
+ * only creates the generic pin (it does not download the image until the pin is actually 
+ * selected). 
+ *
+ * We set MapVC as the delegate for the mapView and then MapVC will provide the 
+ * data for the annotation. 
  */ 
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -105,28 +138,65 @@
     if(!aView)
     {
         aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapPin"]; 
-        aView.canShowCallout = YES; 
+        aView.canShowCallout = YES;     // we want the callout on the annotation
+        // add the image and the disclosure button to the annotation
         aView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
     }
-    // set @property annotation for the case were we deque 
-    // (i.e. if we deque if{} block doesn't execute and annotation hasn't be set)
+    /** Implemenation note: 
+     * --------------------
+     * set @property annotation for the case were we deque 
+     *  (i.e. if we deque if{} block doesn't execute and annotation hasn't be set)
+     */ 
+    
     aView.annotation = annotation;
+    
+    /**
+     * Implementation note: 
+     * --------------------
+     * we cast to UIImageView so we can access the setImage method. Also set the image to 
+     * nil so if the pin is reused we don't get a legacy image
+     */
+    
     [(UIImageView *)aView.leftCalloutAccessoryView setImage:nil]; 
     return aView; 
                                           
 }
 
 
-/* EMD4. set the image if a pin is selected
+/**
+ * Instance method: mapView-didSelectAnnotationView
+ * ------------------------------------------------
+ * mapView-didSelectAnnotationView is where we provide the image to the annotation when 
+ * if a pin is selected. We want mapView-didSelectAnnotationView to get the actual data 
+ * from another class so we add a delegate to mapView-didSelectAnnotationView. We then 
+ * pass the buck to the delegate (to provide the image). We make the call to the delegate 
+ * asynchronous so our app doesn't get blocked while the delegate queries Flickr.
  */ 
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)selectedPin
 {
-    UIImage *image = [self.delegate provideImageToMapVC:self imageForAnnotation:selectedPin.annotation]; 
-    [(UIImageView *)selectedPin.leftCalloutAccessoryView setImage:image];
+    
+    dispatch_queue_t downloadQueue = dispatch_queue_create("mapView delegate image downloader", NULL); 
+    dispatch_async(downloadQueue, ^{     
+        UIImage *image = [self.delegate provideImageToMapVC:self imageForAnnotation:selectedPin.annotation]; 
+        [(UIImageView *)selectedPin.leftCalloutAccessoryView setImage:image];
+    }); 
+    
+    dispatch_release(downloadQueue);
+    
 }
+
+
+
+/**
+ * Instance method: mapView-calloutAccessoryControlTapped
+ * ------------------------------------------------------
+ * mapView-calloutAccessoryControlTapped is the target for the action of an annotation 
+ * disclosure button being tapped. Depending on the type of annotation that was tapped
+ * the controller either segues to a list of photos or to the photo itself. 
+ */
 
 - (void)mapView:(MKMapView *)mapView 
  annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
@@ -145,6 +215,22 @@
     } 
 }
 
+
+
+/** 
+ * Instance method: setRightBarButtonItemInVCToSpinner
+ * ---------------------------------------------------
+ * setRightBarButtonItemInVCToSpinner takes a controller and sets the rightBarButton
+ * on that controller to be a spinner. 
+ * 
+ * Implementation note: when we segue from a map to a list of topPlaces we have a 2-step
+ * dance. In prepareForSegue we immediately use the setRightBarButtonItemInVCToSpinner 
+ * method to set the rightBarButton on the successor controller to a spinner. The 2nd 
+ * step (still in prepare for segue), we make an asynchronous call that gets both the photos
+ * for the place and sets the rightBarButton to a button titled "map" and the selector
+ * showMap
+ */
+
 - (void)setRightBarButtonItemInVCToSpinner:(UIViewController *)aViewController
 {
     
@@ -155,13 +241,20 @@
 }
 
 
+
+/**
+ * Instance method: prepareForSegue 
+ * --------------------------------
+ * prepareForSegue prepares for a segue to either a list of topPlace photos or to a specific photo
+ */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // 'From Annotation' is a reminder that the origin of this action was an annotation
     if([segue.identifier isEqualToString:@"Show topPlace Photos From Annotation"])
         
     {
-     
+        
+        // we immediately set the rightBarButton on the successor to a spinner
         UIViewController *destinationVC = (UIViewController *)segue.destinationViewController; 
         [self setRightBarButtonItemInVCToSpinner:destinationVC];         
         
@@ -176,6 +269,13 @@
          */ 
         
         NSDictionary *placeDict = annotation.place;
+        
+        /**
+         * Implemenation note: 
+         * -------------------
+         * We do two things here. Get the photo data from Flickr and set the data in the successor controller
+         * and finish our setting of the rightBarButton
+         */ 
         
         dispatch_queue_t download_queue = dispatch_queue_create("topPlacePhotos downloader annotation", NULL); 
         dispatch_async(download_queue, ^{

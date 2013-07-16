@@ -11,7 +11,15 @@
 
 @class MapVC; 
 
-// we're going to ask this delegate anytime we need an image for the annotation
+/** 
+ * Implementation note: 
+ * --------------------
+ * The mapView controller needs to provide images to the mapView annoations. We want to keep the 
+ * the mapView controller generic (i.e. we don't want the mapView to get images from Flickr, the 
+ * controller that is seguing to the photos, PlacePhotosTVC/PicHunterTop20TVC, already does that). 
+ * Therefore we create a delegate so the mapView controller can  get data from our main controller. 
+ * Specifically, whenever we need to get an image we pass the buck to the delegate to get the image. 
+ */
 
 @protocol MapVCImageSource <NSObject>
 -(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id <MKAnnotation>)annotation;
@@ -21,7 +29,7 @@
 
 
 /**
- * Implementation notes
+ * Implementation note:
  * --------------------
  * convention is to always set the model for a controller. In this case the 
  * model for the controller is the annonations. 
