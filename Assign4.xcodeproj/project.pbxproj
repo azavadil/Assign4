@@ -393,7 +393,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Assign4/Assign4-Prefix.pch";
 				INFOPLIST_FILE = "Assign4/Assign4-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Assign4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -404,7 +404,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Assign4/Assign4-Prefix.pch";
 				INFOPLIST_FILE = "Assign4/Assign4-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Assign4;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

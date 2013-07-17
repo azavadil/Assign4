@@ -15,6 +15,16 @@
 @synthesize placeTitle = _placeTitle; 
 @synthesize placeSubtitle  = _placeSubtitle; 
 
+
+
+
+/**
+ * Class method: annotationForPlace
+ * --------------------------------
+ * annotationForPlace takes an NSDictionary of photo data and returns a 
+ * a PlaceAnnotation. 
+ */
+
 + (PlaceAnnotation *)annotationForPlace:(NSDictionary *)place
 {
     PlaceAnnotation *annotation = [[PlaceAnnotation alloc] init]; 
@@ -33,15 +43,40 @@
     return annotation; 
 }
 
+
+
+/**
+ * Instance method: title
+ * ----------------------
+ * title returns the title of a photo
+ */ 
+
 - (NSString *)title
 {
     return self.placeTitle; 
 }
 
+
+
+/**
+ * Instance method: subtitle
+ * ----------------------
+ * subtitle returns the description of a photo
+ */ 
+
 - (NSString *)subtitle
 {
     return self.placeSubtitle; 
 }
+
+
+
+
+/**
+ * Instance method: coordinate
+ * ----------------------
+ * coordinate returns the coordinate of a photo
+ */ 
 
 - (CLLocationCoordinate2D)coordinate
 {

@@ -62,8 +62,12 @@
 #pragma mark - Table view data source
 
 
-// Note: leaving the numberOfSections method in the file was stoping the table from rendering
-
+/**
+ * Instance method: tableView-numberOfRowsInSection
+ * ------------------------------------------------
+ * tableView-numberOfRowsInSection returns an NSInteger specifying the number of rows in the 
+ * the section. Required method for table view.
+ */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -71,6 +75,18 @@
     // Return the number of rows in the section.
     return [self.listOfPhotos count];
 }
+
+
+
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * tableView-cellForRowAtIndexPath allocates and initializes the cells for the 
+ * table view controller. 
+ * 
+ * For the place photo the main heading is the photo title and the subheading
+ * is the photo description. 
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -108,6 +124,13 @@
 }
 
 
+
+/**
+ * Instance method: prepareForSegue 
+ * ------------------------------------
+ * self-documenting
+ */
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"Show topPlace Photo"])
@@ -142,6 +165,14 @@
     return data ? [UIImage imageWithData:data] : nil; ; 
     
 }
+
+
+
+/**
+ * Instance method: showMap
+ * ------------------------
+ * target for the action of the map button being pressed
+ */
 
 - (IBAction)showMap:(id)sender
 {

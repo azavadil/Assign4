@@ -15,9 +15,11 @@
 @synthesize vacationName = _vacationName; 
 
 
-/* setupItineraryOptionsArray is called if we reach 
- * viewDidLoad and self.itineraryOptions hasn't been 
- * setup. 
+/** 
+ * Instance method: setupItineraryOptionsArray 
+ * -------------------------------------------
+ * setupItineraryOptionsArray is called if we reach viewDidLoad and 
+ * self.itineraryOptions hasn't been setup. 
  */ 
 
 - (void)setupItineraryOptionsArray
@@ -27,7 +29,11 @@
 
 
 
-
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * self-documenting
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -43,11 +49,11 @@
 
 
 
-
-
-
-
-
+/**
+ * Instance method: prepareForSegue
+ * --------------------------------
+ * self-documenting
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -69,6 +75,14 @@
     }
 }
 
+
+
+/**
+ * Instance method: tableView-didSelectRowAtIndexPath
+ * --------------------------------------------------
+ * There are only two options from the Itinerary view. Show an itinerary by place
+ * or show an itinerary by tag. 
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -96,8 +110,12 @@
 
 
 
-
-
+/**
+ * Instance method: tableView-numberOfRowsInSection
+ * ------------------------------------------------
+ * tableView-numberOfRowsInSection returns an NSInteger specifying the number of rows in the 
+ * the section. Required method for table view.
+ */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

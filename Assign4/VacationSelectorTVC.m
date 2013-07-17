@@ -26,8 +26,11 @@
 
 
 
-/* helper method to generate the NSDocumentsDirectory URL
- * path is /NSDocumentDirectory/ListOfVacations
+/** 
+ * Instance method: makeVacationsArrayURL 
+ * --------------------------------------
+ * makeVacationsArrayURL is a convience method to generate the NSDocumentsDirectory URL
+ * path is at: /NSDocumentDirectory/ListOfVacations
  */ 
 
 - (NSURL *)makeVacationsArrayURL
@@ -41,13 +44,11 @@
 
 
 
-
-
-
-
-
-/* we write to the NSDocumentsDirectory in the setter
- * to keep the TVC and the document synchronized
+/** 
+ * Instance method: setVacations
+ * -----------------------------
+ * setVacations sets the instance variable _vacations. We also write to the 
+ * NSDocumentsDirectory in the setter to keep the TVC and the document synchronized
  */ 
 
 
@@ -62,22 +63,13 @@
 
 
 
-
-
-
-
-
-
-
-
-
-/* if we get to viewDidLoad and the self.vacations
- * hasn't been set up, then we need to setup
- * self.vacations 
- * makeVacationsArrayURL makes URL <NSDocumentsDirector>/ListOfVacations
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * viewDidLoad initializes setup that needs to be completed when the view goes 
+ * onscreen. If we reach viewDidLoad and self.vacations hasn't been set up, 
+ * then we need to setup self.vacations. 
  */ 
-
-
 
 -(void)viewDidLoad
 {
@@ -91,16 +83,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
+/**
+ * Instance method: tableView-numberOfRowsInSection
+ * ------------------------------------------------
+ * tableView-numberOfRowsInSection returns an NSInteger specifying the number of rows in the 
+ * the section. Required method for table view.
+ */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -109,9 +97,13 @@
 
 
 
-
-
-
+/**
+ * Instance method: prepareForSegue
+ * --------------------------------
+ * note the generic implementation of the prepareForSegue. prepareForSegue only checks the
+ * the destination controller responds to the method setVactionName. As long as the destination 
+ * controller responds to setVacationName we set the vacation name and segue. 
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
 {
@@ -145,19 +137,22 @@
 
 
 
-/* Note. We could also use didSelectRowAtIndexPath to identify the vacation and 
+/** 
+ * Implementation note:
+ * --------------------------------------------------
+ * Instead of using a segue we could also use didSelectRowAtIndexPath to identify the vacation and 
  * trigger a segue. 
- * The only drawback is the sender is technically the controller
- * Instead of using self as the sender, we would have to get the selected vacation 
+ * 
+ * The drawback is the sender is technically the controller. Instead of using self 
+ * as the sender, we would have to get the selected vacation 
  * with [self.vacation objectAtIndex.indexPath.row] and send the NSString
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"Show ItineraryTVC" sender:[self.vacations objectAtIndex:indexPath.row]]; 
-}
-*/
-
+ * 
+ *
+ * - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+ * {
+ *    [self performSegueWithIdentifier:@"Show ItineraryTVC" sender:[self.vacations objectAtIndex:indexPath.row]]; 
+ * }
+ */
 
 
 
