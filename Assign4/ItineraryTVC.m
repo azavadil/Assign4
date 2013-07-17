@@ -124,9 +124,11 @@
 
 
 
-
-
-
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * self-documenting
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

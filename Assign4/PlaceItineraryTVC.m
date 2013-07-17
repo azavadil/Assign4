@@ -26,20 +26,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * Instance method: testPressed
+ * ----------------------------
+ * deprecated: used for debugging
+ */
 - (IBAction)testPressed:(id)sender {
     NSLog(@"test: self.vacationName = %@", self.vacationName);
     
@@ -50,12 +41,11 @@
 
 
 
-
-
-
-
-
-
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * viewDidLoad is where we do any initial setup. Here we call opendatabase
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad]; 
@@ -64,10 +54,13 @@
 
 
 
-
-
-
-
+/**
+ * Instance method: setupFetchedResultsController
+ * ----------------------------------------------
+ * setupFetchedResultsController is passed to the OpenVacationHelper by the opendatabase method. 
+ * 
+ *
+ */
 - (void) setupFetchedResultsController:(UIManagedDocument *)vacation
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"]; 
