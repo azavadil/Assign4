@@ -102,7 +102,12 @@
 
 
 
-
+/**
+ * Instance method: getSizeOfDictionary
+ * ------------------------------------
+ * getSizeOfDictionary takes a dictionary and returns the size of the 
+ * items in the dictionary
+ */
 
 -(int)getSizeOfDictionary:(NSDictionary *)dictionaryOfImageData
 {
@@ -116,10 +121,15 @@
 }
 
 
-
-
-
 #define MAXIMUM_CACHE_SIZE 10485760
+
+
+/**
+ * Instance method: makeCacheURL
+ * ----------------------------- 
+ * makeCacheURL is a convience method to autogenerate the path where the default 
+ * cache directory is located
+ */
 
 - (NSURL*)makeCacheURL
 {
@@ -131,8 +141,16 @@
 
 
 
-
-
+/**
+ * Instance method: cachePhoto
+ * ---------------------------
+ * cachePhoto takes an NSString and an image. The cache is an NSDictionary. The dictionary
+ * holds 2 types of values: UIImages with uniqueID as keys and an NSMutableArray with 
+ * @"chronology" as key. We use the chronology as a queue to keep track of the order that 
+ * images are added to the cache. When the cache is over the size limit we take the uniqueID
+ * at position 0 of the chronology (i.e. the oldest uniqueID) and delete that entry from the 
+ * cache.
+ */
 
 - (void)cachePhoto:(NSString *)uniqueID imageToCache:(UIImage *)image
 {
@@ -182,12 +200,18 @@
 
 
 
-
-
-
-
-
-/* fetchImage just calls its helper methods*/ 
+/**
+ * Instance method: fetchImage
+ * ---------------------------
+ * fetchImage just calls the helper methods fetchImageWithDictionary and
+ * fetchImageWithDatabase. 
+ * 
+ * Implementation note: 
+ * --------------------
+ * We use a single view controller to display photos that are fetched from Flickr
+ * or photos that are fetched out of the database. fetchImage is just a wrapper that 
+ * directs us to the appropriate method. 
+ */ 
  
 - (UIImage *)fetchImage
 {
@@ -206,17 +230,13 @@
 
 
 
-
-
-
-
-
-/* Fetch image:
- * cache data structure
- * dictionary of photo ID/images pairs 
- * and a single NSArray chronology
+/**
+ * Instance method: fetchImageWithDictionary
+ * -----------------------------------------
+ * fetchImageWithDictionary first checks whether the specified photo is in the cache. 
+ * If the photo is in the cache it retrieves the photo data from the cache. Otherwise
+ * fetchImageWithDictionary queries Flickr for the photo data. 
  */ 
-
 
 - (UIImage *)fetchImageWithDictionary
 {
@@ -244,6 +264,14 @@
 
 
 
+/**
+ * Instance method: fetchImageWithDatabase
+ * -----------------------------------------
+ * fetchImageWithDatabase first checks whether the specified photo is in the cache. 
+ * If the photo is in the cache it retrieves the photo data from the cache. Otherwise
+ * fetchImageWithDatabase queries the database for the photo data. 
+ */ 
+
 - (UIImage *)fetchImageWithDatabase
 {
     UIImage *image = nil; 
@@ -269,9 +297,13 @@
 
 
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-/* viewDidLoad is the first place we want to think about putting things
- * all we need to do is set my scrollViews' contentSize to be the size of the image
+/** 
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+ * viewDidLoad is the first place we want to think about putting things. 
+ *
+ * In this case we set the spinner animating and then asynchronously fetch photo data. 
  */ 
 
 - (void)viewDidLoad
@@ -331,11 +363,6 @@
 
 
 
-
-
-
-
-
 - (void)viewDidUnload
 {
     [self setImageView:nil];
@@ -349,21 +376,11 @@
 
 
 
-
-
-
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return YES;
 }
-
-
-
-
-
 
 
 

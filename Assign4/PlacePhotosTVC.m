@@ -14,14 +14,12 @@
 
 
 @interface PlacePhotosTVC() <MapVCImageSource> 
-@property (nonatomic, strong) NSArray *annotationsForDestinationVC;
-- (void)updateAnnotationsForDestinationVC;
+
 @end
 
 @implementation PlacePhotosTVC
 
 @synthesize listOfPhotos = _listOfPhotos; 
-@synthesize annotationsForDestinationVC = _annotationsForDestinationVC; 
 
 - (void) setListOfPhotos:(NSArray *)listOfPhotos
 {
@@ -53,10 +51,7 @@
     return annotations; 
 }
 
-- (void)updateAnnotationsForDestinationVC
-{
-    self.annotationsForDestinationVC = [self mapAnnotations]; 
-}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -125,7 +120,7 @@
     {
         MapVC *destinationMapVC = segue.destinationViewController; 
         destinationMapVC.delegate = self; 
-        [segue.destinationViewController setAnnotations:self.annotationsForDestinationVC]; 
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]]; 
     }
 }
 
@@ -150,7 +145,6 @@
 
 - (IBAction)showMap:(id)sender
 {
-    [self updateAnnotationsForDestinationVC]; 
     [self performSegueWithIdentifier:@"Show topPlaces Map" sender:self]; 
 }
 

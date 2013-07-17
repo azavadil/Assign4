@@ -180,6 +180,16 @@
     return annotations; 
 }
 
+
+
+/**
+ * Instance method: provideImageToMapVC 
+ * ------------------------------------
+ * PlacePhotosTVC is the datasource for a mapView controller (i.e. PicHunterTop20TVC gets images
+ * from Flickr on the mapView controllers behalf). provideImageToMapVC gets an image on behalf
+ * of the mapView (the mapView subsequently passes the image to an annotation
+ */
+
 -(UIImage *)provideImageToMapVC:(MapVC *)sender imageForAnnotation:(id<MKAnnotation>)annotation
 {
     PhotoAnnotation *photoAnnotation = (PhotoAnnotation *)annotation;
@@ -190,6 +200,11 @@
 
 
 
+/**
+ * Instance method: prepareForSegue
+ * --------------------------------
+ * self-documenting
+ */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"Show Recent Photo"])
