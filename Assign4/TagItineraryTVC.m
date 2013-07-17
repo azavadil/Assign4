@@ -15,9 +15,11 @@
 
 
 
-/* TagItineraryTVC inherits from PlaceItinearyTVC
- * we override setupFetchedResultsController so we
- * pull all the tags
+/** 
+ * Instance method: setupFetchedResultsController 
+ * ----------------------------------------------
+ * TagItineraryTVC inherits from PlaceItinearyTVC. we override setupFetchedResultsController so we
+ * pull tags instead of places
  */
 - (void) setupFetchedResultsController:(UIManagedDocument *)vacation
 {
@@ -38,10 +40,11 @@
 
 
 
-
-
-
-
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * tableView-cellForRowAtIndexPath specifies the prototype for a table view cell. 
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -62,16 +65,14 @@
 
 
 
-
-
-
-
-
-
-/* generic version of prepareForSegue. 
-* we check that the destinationViewController responds to 
-* setPlace and setVacationName
-*/ 
+/**
+ * Instance method: prepareForSegue 
+ * --------------------------------
+ * prepareForSegue is a generic implementation of prepareForSegue. 
+ * prepareForSegue checks that the destinationViewController responds to 
+ * setTag and setVacationName and then sets the tag and the vacation name 
+ * on the successor controller
+ */ 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -89,17 +90,6 @@
         [segue.destinationViewController performSelector:@selector(setVacationName:) withObject:self.vacationName];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

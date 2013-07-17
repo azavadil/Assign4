@@ -30,10 +30,11 @@
 
 
 
-
-
-/* setup the fetchedResultsController with the call
- * to openDatabase in viewDidLoad
+/**
+ * Instance method: viewDidLoad
+ * ----------------------------
+ * viewDidLoad is where we do any initial setup. viewDidLoad makes a call to 
+ * openDatabase which in turn sets up the fetchedResultsController 
  */ 
 - (void)viewDidLoad
 {
@@ -44,9 +45,14 @@
 
 
 
-
-
-
+/**
+ * Instance method: setupFetchedResultsController
+ * ----------------------------------------------
+ * setupFetchedResultsController is passed to the OpenVacationHelper by the openDatabase method. 
+ * Because creating/opening documents is done asynchronously, we need a method that we can call 
+ * inside a block to be completed (i.e. setupFetchedResultsController is the code that gets put
+ * in the block). 
+ */
 
 - (void) setupFetchedResultsController:(UIManagedDocument *)vacation
 {
@@ -62,8 +68,11 @@
 
 
 
-
-
+/** 
+ * Instance method: openDatabase 
+ * -----------------------------
+ * works with setupFetchedResultsController to connect the TVC to a shared managedDocument
+ */ 
 
 - (void) openDatabase 
 {
@@ -73,13 +82,11 @@
 
 
 
-
-
-
-
-
-
-
+/**
+ * Instance method: tableView-cellForRowAtIndexPath
+ * ------------------------------------------------
+ * tableView-cellForRowAtIndexPath specifies the prototype for a table view cell. 
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -101,14 +108,12 @@
 
 
 
-
-
-
-
-
-/* generic version of prepareForSegue
- * prepareForSegue will set the @property photo on the topPlacePhotoVC
- * 
+/** 
+ * Instance method: prepareForSegue
+ * --------------------------------
+ * prepareForSegue is a generic version of prepareForSegue. prepareForSegue
+ * validates that the destination controller responds to the setPhoto method, and 
+ * sets the @property photo on the destination controller (topPlacePhotoVC), 
  */ 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -124,24 +129,11 @@
 
 
 
-
-
-
-
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return YES;
 }
-
-
-
-
-
-
-
-
 
 
 
