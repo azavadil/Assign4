@@ -45,7 +45,7 @@
     {
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context]; 
         photo.unique = [flickrInfo objectForKey:FLICKR_PHOTO_ID]; 
-        photo.title = [flickrInfo objectForKey:FLICKR_PHOTO_TITLE]; 
+        photo.title =  [flickrInfo objectForKey:FLICKR_PHOTO_TITLE]; 
         photo.subtitle = [flickrInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
         photo.imageURL = [[FlickrFetcher urlForPhoto:flickrInfo format:FlickrPhotoFormatLarge] absoluteString]; 
         photo.fromPlace = [Place placeWithName:[flickrInfo objectForKey:FLICKR_PHOTO_PLACE_NAME] inManagedObjectContect:context];
