@@ -259,6 +259,7 @@
 
 /** 
  * Instance method: makeVacationsArrayURL
+ * --------------------------------------
  * makeVacationsArrayURL is a helper method to generate the NSDocumentsDirectory URL.
  * the path we create is /NSDocumentDirectory/ListOfVacations
  */ 

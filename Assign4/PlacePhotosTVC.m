@@ -13,13 +13,23 @@
 #import "MapVC.h"
 
 
-@interface PlacePhotosTVC() <MapVCImageSource> 
+@interface PlacePhotosTVC() 
+
 
 @end
 
 @implementation PlacePhotosTVC
 
 @synthesize listOfPhotos = _listOfPhotos; 
+
+
+/**
+ * Instance method: setListOfPhotos
+ * --------------------------------
+ * setter for the _listOfPhotos instance variable. Note that we 
+ * reload the table whenever the list is set. 
+ *
+ */
 
 - (void) setListOfPhotos:(NSArray *)listOfPhotos
 {
@@ -143,7 +153,7 @@
     {
         MapVC *destinationMapVC = segue.destinationViewController; 
         destinationMapVC.delegate = self; 
-        [segue.destinationViewController setAnnotations:[self mapAnnotations]]; 
+        [segue.destinationViewController setAnnotations:[self mapAnnotations]];     
     }
 }
 

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PicHunterTVC.h"
+#import "PlacePhotosTVC.h"
 
-@interface PicHunterTop20TVC : UITableViewController
+/** 
+ * Implemenation note: inherits from PlacePhotosTVC
+ * ------------------------------------------------
+ */
 
-@property (nonatomic, strong) NSArray *photoDictionaries; 
+@interface PicHunterTop20TVC : PlacePhotosTVC
 
 @end

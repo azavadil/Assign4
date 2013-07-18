@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MapVC.h"
 
 
 
-@interface PlacePhotosTVC : UITableViewController
+@interface PlacePhotosTVC : UITableViewController <MapVCImageSource> 
 
 
 //simple model, array of photo dictionaries 
 @property (nonatomic, strong) NSArray *listOfPhotos; 
 
+- (NSArray *)mapAnnotations;
 
 @end
